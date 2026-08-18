@@ -107,7 +107,7 @@
         {
           "path": "data/copilot/information-objects.json",
           "record_key": "information_objects",
-          "record_count": 27,
+          "record_count": 28,
           "description": "Synthetic procedures, tests, safety notes, drawing descriptions, checklists and configuration-control information objects."
         },
         {

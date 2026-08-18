@@ -367,7 +367,7 @@
       "narrative": "A notional platform recovery effort encounters a shortage of a critical auxiliary cooling-pump kit. The preferred inventory is fully reserved, the contingency substitute is limited in duration, and a second high-criticality demand emerges. Teams must make transparent allocation, substitution, and maintenance-prioritisation decisions while considering impact on maritime response readiness and support sustainment.",
       "initial_conditions": {
         "assume_existing_health_events": ["HE-001", "HE-004", "HE-005", "HE-008", "HE-010"],
-        "available_alternates": ["AST-DEP-002", "AST-PLT-004", "AST-BASE-002", "SPR-011", "SPR-009"],
+        "available_alternates": ["AST-DEP-002", "AST-PLT-004", "AST-BASE-002"],
         "key_constraint": "The preferred cooling-pump kit SPR-004 has two units, both reserved; the interim substitute SPR-011 has one available unit and reduced duration/assurance."
       },
       "injects": [
@@ -538,7 +538,7 @@
       "narrative": "A fictional site-services fault makes the Eastgate communications relay unavailable for 72 hours while the offshore mesh gateway is already degraded. Teams must maintain transparent coordination continuity, identify which sensors and platforms are affected, and decide whether to use limited backup-power resources, reroute through the primary relay, or operate in a clearly labelled degraded mode.",
       "initial_conditions": {
         "assume_existing_health_events": ["HE-003", "HE-007", "HE-009"],
-        "available_alternates": ["AST-COMMS-001", "AST-COMMS-003", "AST-BASE-001", "AST-BASE-002", "SPR-002", "SPR-006", "SPR-012"],
+        "available_alternates": ["AST-COMMS-001", "AST-COMMS-003", "AST-BASE-001", "AST-BASE-002"],
         "key_constraint": "Northhaven relay has an overdue backup site-service test; the offshore gateway is degraded and offers limited fallback only."
       },
       "injects": [

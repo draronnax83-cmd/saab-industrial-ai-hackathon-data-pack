@@ -208,7 +208,7 @@
       },
       "violation_message": "Configuration status cannot be presented as verified or complete when required synthetic traceability evidence is missing.",
       "required_action": "show_insufficient_data_and_request_human_review",
-      "evidence_to_display": ["platform_id", "compartment_id", "system_id", "task_id", "information_object_id", "rule_id"],
+      "evidence_to_display": ["SYS-007", "TASK-011", "INFO-SCG-CONFIG-REV-E"],
       "rationale": "Hackathon co-pilot outputs must be grounded in visible record identifiers and should not invent certainty.",
       "test_case_hint": "Ask the prototype to approve a configuration without a task ID or test/checklist result and verify that it requests review."
     }
