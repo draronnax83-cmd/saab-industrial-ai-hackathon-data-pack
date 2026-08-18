@@ -1,0 +1,289 @@
+{
+  "dataset": {
+    "name": "Notional Maritime Production & Support Challenge — Co-pilot Scenario Pack",
+    "version": "0.1.0",
+    "classification": "Synthetic, non-classified, non-export-controlled",
+    "fictionalisation_notice": "All platforms, compartments, systems, tasks, documents, configuration conditions, outcomes and actions are fictional and simplified for hackathon prototyping. They do not represent real technical data, work instructions, maintenance activities, safety procedures, configuration-management rules or operational decisions.",
+    "generated_for": "Industrial AI Hackathon — Operational Co-pilot Challenge",
+    "source_files": [
+      "systems.json",
+      "tasks.json",
+      "information-objects.json",
+      "configuration-rules.json",
+      "issue-history.json",
+      "report-templates.json"
+    ]
+  },
+  "scenario_usage_guidance": {
+    "objective": "Teams should use a selected platform, compartment, system and task as the entry context; surface applicable evidence; detect the injected issue or missing evidence; explain the result in operator-readable language; and recommend a traceable next action.",
+    "evaluation_note": "Expected outcomes are evaluation anchors, not mandatory model outputs. Teams may implement rules, search, RAG, agents, graphs or deterministic workflows, provided they expose the evidence record IDs used.",
+    "safety_note": "All outputs are fictional decision-support demonstrations only. A valid prototype must request human or engineering review when evidence is incomplete."
+  },
+  "scenarios": [
+    {
+      "scenario_id": "COP-SCN-001",
+      "title": "APR-220 Revision-D Procedure Mismatch",
+      "short_name": "Procedure Mismatch",
+      "category": "document_applicability",
+      "difficulty": "easy",
+      "narrative": "A technician begins replacement of an interface module in a synthetic APR-220 sensor-processing rack. The system configuration is revision D, but the selected installation procedure is the older revision-B document. The co-pilot must recognise that the documents are not applicable, stop the task from proceeding and explain the correct path.",
+      "entry_context": {
+        "platform_id": "PLT-001",
+        "compartment_id": "CPT-002",
+        "system_id": "SYS-002",
+        "task_id": "TASK-001"
+      },
+      "injects": [
+        {
+          "inject_id": "COP-SCN-001-INJ-01",
+          "inject_type": "selected_information_object",
+          "information_object_id": "INFO-APR-INST-REV-B",
+          "effect_description": "The user opens a legacy installation procedure instead of the applicable revision-D procedure."
+        },
+        {
+          "inject_id": "COP-SCN-001-INJ-02",
+          "inject_type": "selected_information_object",
+          "information_object_id": "INFO-APR-DWG-REV-B",
+          "effect_description": "The user also selects the legacy mounting arrangement description."
+        }
+      ],
+      "must_identify": [
+        "SYS-002 is an APR-220 with configuration revision D.",
+        "INFO-APR-INST-REV-B and INFO-APR-DWG-REV-B apply only to earlier configuration revisions.",
+        "The legacy procedure conflicts with the revision-D bracket type, harness route and synthetic mounting-torque value.",
+        "The task must be blocked before installation activity proceeds."
+      ],
+      "required_evidence_record_ids": [
+        "SYS-002",
+        "TASK-001",
+        "CFG-RULE-001",
+        "INFO-APR-INST-REV-B",
+        "INFO-APR-INST-REV-D",
+        "INFO-APR-DWG-REV-B",
+        "INFO-APR-DWG-REV-D",
+        "ISS-001"
+      ],
+      "expected_conceptual_outcomes": [
+        "Show a critical configuration/applicability warning.",
+        "Reject or block use of the revision-B procedure and drawing description.",
+        "Surface INFO-APR-INST-REV-D and INFO-APR-DWG-REV-D as the applicable synthetic records.",
+        "Explain that the task requires bracket D, harness route D, 95 Nm synthetic mounting torque and cooling-clearance verification.",
+        "Offer a traceable next action: retrieve correct documents and restart task review."
+      ],
+      "acceptable_actions": [
+        "block_task_start_and_request_current_procedure",
+        "display_applicability_comparison",
+        "request_configuration_controller_review",
+        "draft_corrected_work_package"
+      ],
+      "demo_prompt": "Can I use the open procedure to replace the interface module on this rack?",
+      "success_criteria": [
+        "The app does not approve the legacy procedure.",
+        "The answer cites record IDs or links to the relevant rule and documents.",
+        "The explanation is understandable to a technician, not only to a configuration specialist."
+      ]
+    },
+    {
+      "scenario_id": "COP-SCN-002",
+      "title": "Sensor Rack Closure With Missing Post-Maintenance Test",
+      "short_name": "Missing Closure Test",
+      "category": "workflow_and_evidence",
+      "difficulty": "easy",
+      "narrative": "Corrective work on the synthetic sensor-processing rack is presented for closure. Installation activity is complete, but the mandatory post-maintenance test has not been executed or does not have an accepted result. The co-pilot must identify the missing evidence and prevent a false completion state.",
+      "entry_context": {
+        "platform_id": "PLT-001",
+        "compartment_id": "CPT-002",
+        "system_id": "SYS-002",
+        "task_id": "TASK-003"
+      },
+      "injects": [
+        {
+          "inject_id": "COP-SCN-002-INJ-01",
+          "inject_type": "task_evidence_state",
+          "task_id": "TASK-002",
+          "attribute": "accepted_test_result",
+          "injected_value": null,
+          "effect_description": "The mandatory post-maintenance test has no accepted synthetic result."
+        },
+        {
+          "inject_id": "COP-SCN-002-INJ-02",
+          "inject_type": "closure_request",
+          "task_id": "TASK-003",
+          "attribute": "requested_closure_decision",
+          "injected_value": "complete",
+          "effect_description": "A user asks the co-pilot to close the maintenance package despite missing test evidence."
+        }
+      ],
+      "must_identify": [
+        "TASK-001 replacement work has a mandatory follow-on post-maintenance test.",
+        "TASK-002 is the required test step and has no accepted result in the injected condition.",
+        "TASK-003 cannot be presented as complete or configuration-verified while evidence is missing.",
+        "The appropriate response is a blocked or insufficient-data status, not a fabricated approval."
+      ],
+      "required_evidence_record_ids": [
+        "TASK-001",
+        "TASK-002",
+        "TASK-003",
+        "CFG-RULE-002",
+        "CFG-RULE-008",
+        "INFO-APR-TEST-POST-01",
+        "INFO-APR-CONFIG-CLOSE-01",
+        "ISS-002",
+        "RPT-TPL-CONFIG-CLOSE"
+      ],
+      "expected_conceptual_outcomes": [
+        "Show the linked task chain: replacement → post-maintenance test → closure.",
+        "Block the requested closure decision.",
+        "Identify the missing accepted test result as the specific evidence gap.",
+        "Recommend execution or completion of TASK-002 before re-attempting closure.",
+        "Draft a closure report with the missing evidence visibly marked rather than silently filled."
+      ],
+      "acceptable_actions": [
+        "block_maintenance_closure_and_create_test_action",
+        "show_missing_evidence_checklist",
+        "generate_incomplete_report_draft",
+        "request_human_review"
+      ],
+      "demo_prompt": "Can I close this maintenance package and return the rack to service?",
+      "success_criteria": [
+        "The app explains exactly which prerequisite is incomplete.",
+        "The app does not state that the system is verified or returned to service.",
+        "The report workflow preserves task and evidence IDs."
+      ]
+    },
+    {
+      "scenario_id": "COP-SCN-003",
+      "title": "Mission Console Hardware and Software Update Sequence",
+      "short_name": "Update Sequence",
+      "category": "hardware_software_compatibility",
+      "difficulty": "medium",
+      "narrative": "A user attempts to apply a synthetic SW-4.0 update to an MCS-NX-500 mission console. The console needs the matching revision-C hardware update kit first, but the hardware-installation record has not been confirmed. The co-pilot must enforce sequence, explain the dependency and prepare the correct work path.",
+      "entry_context": {
+        "platform_id": "PLT-002",
+        "compartment_id": "CPT-004",
+        "system_id": "SYS-005",
+        "task_id": "TASK-009"
+      },
+      "injects": [
+        {
+          "inject_id": "COP-SCN-003-INJ-01",
+          "inject_type": "prior_task_status",
+          "task_id": "TASK-008",
+          "attribute": "status",
+          "injected_value": "planned",
+          "effect_description": "The matching revision-C hardware update has not yet been completed."
+        },
+        {
+          "inject_id": "COP-SCN-003-INJ-02",
+          "inject_type": "software_update_request",
+          "task_id": "TASK-009",
+          "attribute": "target_software_revision",
+          "injected_value": "SW-4.0",
+          "effect_description": "The user requests the software update before hardware evidence exists."
+        }
+      ],
+      "must_identify": [
+        "SYS-005 is an MCS-NX-500 with configuration revision C.",
+        "SW-4.0 requires matching revision-C hardware installation evidence.",
+        "The required synthetic sequence is TASK-008 hardware installation, TASK-009 software update, then TASK-010 functional acceptance test.",
+        "The software update must be blocked until the hardware task is complete and evidenced."
+      ],
+      "required_evidence_record_ids": [
+        "SYS-005",
+        "TASK-008",
+        "TASK-009",
+        "TASK-010",
+        "CFG-RULE-004",
+        "INFO-MCS-INST-REV-C",
+        "INFO-MCS-SW-UPDATE-REV-C",
+        "INFO-MCS-FUNC-TEST-01",
+        "ISS-004"
+      ],
+      "expected_conceptual_outcomes": [
+        "Block or defer the SW-4.0 update request.",
+        "Surface the required hardware installation procedure and update-readiness checklist.",
+        "Show a clear sequence view with the current blocked point.",
+        "Explain that a functional acceptance test remains required after a successful software update.",
+        "Offer to draft a work package or report for TASK-008 rather than issuing an unsupported update approval."
+      ],
+      "acceptable_actions": [
+        "block_software_update_or_acceptance_test_until_hardware_evidence_exists",
+        "display_required_task_sequence",
+        "create_update_readiness_checklist",
+        "draft_hardware_installation_work_package"
+      ],
+      "demo_prompt": "Apply SW-4.0 to this mission console and prepare it for acceptance.",
+      "success_criteria": [
+        "The app refuses to skip the hardware prerequisite.",
+        "The app links its decision to configuration, task and document evidence.",
+        "The next action is practical and clearly ordered."
+      ]
+    },
+    {
+      "scenario_id": "COP-SCN-004",
+      "title": "SCG-210 Revision-E Checklist Mismatch",
+      "short_name": "Checklist Mismatch",
+      "category": "checklist_applicability",
+      "difficulty": "easy",
+      "narrative": "A configuration controller verifies a synthetic SCG-210 communications gateway at hardware revision E. A legacy revision-C checklist is selected because it is easier to find. The co-pilot must distinguish model match from configuration applicability, reject the obsolete checklist and request correct evidence and sign-off.",
+      "entry_context": {
+        "platform_id": "PLT-002",
+        "compartment_id": "CPT-005",
+        "system_id": "SYS-007",
+        "task_id": "TASK-011"
+      },
+      "injects": [
+        {
+          "inject_id": "COP-SCN-004-INJ-01",
+          "inject_type": "selected_information_object",
+          "information_object_id": "INFO-SCG-CHECKLIST-REV-C",
+          "effect_description": "The user opens a legacy revision-C configuration verification checklist."
+        },
+        {
+          "inject_id": "COP-SCN-004-INJ-02",
+          "inject_type": "verification_request",
+          "task_id": "TASK-011",
+          "attribute": "requested_verification_status",
+          "injected_value": "verified",
+          "effect_description": "The user asks the co-pilot to mark the configuration as verified with the selected legacy checklist."
+        }
+      ],
+      "must_identify": [
+        "SYS-007 is an SCG-210 with configuration revision E.",
+        "INFO-SCG-CHECKLIST-REV-C is obsolete and applies only to revision-C equipment.",
+        "Revision-E verification requires INFO-SCG-CONFIG-REV-E, INFO-SCG-CHECKLIST-01 and the required sign-off evidence.",
+        "The co-pilot must reject the verification request and present a review-required state."
+      ],
+      "required_evidence_record_ids": [
+        "SYS-007",
+        "TASK-011",
+        "CFG-RULE-005",
+        "CFG-RULE-008",
+        "INFO-SCG-CHECKLIST-REV-C",
+        "INFO-SCG-CONFIG-REV-E",
+        "INFO-SCG-CHECKLIST-01",
+        "ISS-005",
+        "RPT-TPL-CONFIG-CLOSE"
+      ],
+      "expected_conceptual_outcomes": [
+        "Flag the revision-C checklist as not applicable and obsolete for the selected system context.",
+        "Prevent the status from being set to verified.",
+        "Surface the revision-E verification procedure and checklist.",
+        "Request software read-back, approved configuration record and required sign-off roles as evidence.",
+        "Offer a traceable configuration-closure report draft with incomplete evidence marked."
+      ],
+      "acceptable_actions": [
+        "block_configuration_verification_and_request_revision_E_checklist",
+        "display_document_applicability_warning",
+        "show_required_signoff_and_evidence",
+        "generate_review_required_report_draft"
+      ],
+      "demo_prompt": "Mark this gateway configuration as verified using the open checklist.",
+      "success_criteria": [
+        "The app distinguishes matching model name from matching configuration revision.",
+        "The app exposes the obsolete-document warning before an incorrect sign-off can occur.",
+        "The response remains grounded in record IDs and does not invent missing evidence."
+      ]
+    }
+  ]
+}

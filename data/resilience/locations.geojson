@@ -1,0 +1,292 @@
+{
+  "type": "FeatureCollection",
+  "metadata": {
+    "name": "Notional Baltic Maritime Resilience Challenge — Diagrammatic Locations",
+    "version": "0.1.0",
+    "classification": "Synthetic, non-classified, non-export-controlled",
+    "fictionalisation_notice": "All place names, coordinates, positions, relationships and operational implications are fictional. Coordinates are deliberately diagrammatic within a broad Baltic-region bounding area and must not be interpreted as real sites, routes, facilities, sensor locations or operating patterns.",
+    "crs": "WGS84 / EPSG:4326",
+    "intended_use": "Hackathon map and graph visualisation only"
+  },
+  "type_definitions": {
+    "platform": "Mobile maritime asset shown at a nominal current or staging position.",
+    "sensor": "Fictional fixed sensing location.",
+    "base": "Fictional support and coordination location.",
+    "depot": "Fictional spares or distribution location.",
+    "maintenance_site": "Fictional maintenance and restoration location.",
+    "communications_node": "Fictional relay or gateway position.",
+    "logistics_node": "Fictional distribution hand-off location."
+  },
+  "features": [
+    {
+      "type": "Feature",
+      "id": "AST-PLT-001",
+      "geometry": { "type": "Point", "coordinates": [17.42, 58.92] },
+      "properties": {
+        "asset_id": "AST-PLT-001",
+        "name": "NMS Skarven",
+        "feature_type": "platform",
+        "asset_type": "subsurface_platform",
+        "label": "West Baltic Operating Box",
+        "symbol": "subsurface_platform",
+        "status": "available",
+        "diagram_position": { "x": 23, "y": 44 }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "AST-PLT-002",
+      "geometry": { "type": "Point", "coordinates": [19.14, 59.28] },
+      "properties": {
+        "asset_id": "AST-PLT-002",
+        "name": "NMS Vargen",
+        "feature_type": "platform",
+        "asset_type": "surface_patrol_platform",
+        "label": "Central Baltic Operating Box",
+        "symbol": "surface_platform",
+        "status": "available",
+        "diagram_position": { "x": 47, "y": 37 }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "AST-PLT-003",
+      "geometry": { "type": "Point", "coordinates": [18.38, 58.51] },
+      "properties": {
+        "asset_id": "AST-PLT-003",
+        "name": "NMS Ternen",
+        "feature_type": "platform",
+        "asset_type": "surface_patrol_platform",
+        "label": "Maintenance Staging Area",
+        "symbol": "surface_platform",
+        "status": "limited_availability",
+        "diagram_position": { "x": 36, "y": 60 }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "AST-PLT-004",
+      "geometry": { "type": "Point", "coordinates": [16.88, 58.18] },
+      "properties": {
+        "asset_id": "AST-PLT-004",
+        "name": "NMS Ejdern",
+        "feature_type": "platform",
+        "asset_type": "maritime_support_platform",
+        "label": "Southwest Support Corridor",
+        "symbol": "support_platform",
+        "status": "available",
+        "diagram_position": { "x": 16, "y": 70 }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "AST-SNS-001",
+      "geometry": { "type": "Point", "coordinates": [18.06, 60.04] },
+      "properties": {
+        "asset_id": "AST-SNS-001",
+        "name": "Northpoint Coastal Sensor",
+        "feature_type": "sensor",
+        "asset_type": "coastal_sensor",
+        "label": "Northpoint",
+        "symbol": "coastal_sensor",
+        "status": "available",
+        "diagram_position": { "x": 32, "y": 13 }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "AST-SNS-002",
+      "geometry": { "type": "Point", "coordinates": [21.36, 59.67] },
+      "properties": {
+        "asset_id": "AST-SNS-002",
+        "name": "Eastreach Coastal Sensor",
+        "feature_type": "sensor",
+        "asset_type": "coastal_sensor",
+        "label": "Eastreach",
+        "symbol": "coastal_sensor",
+        "status": "degraded",
+        "diagram_position": { "x": 78, "y": 23 }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "AST-SNS-003",
+      "geometry": { "type": "Point", "coordinates": [19.76, 57.72] },
+      "properties": {
+        "asset_id": "AST-SNS-003",
+        "name": "Southbank Underwater Sensor",
+        "feature_type": "sensor",
+        "asset_type": "underwater_sensor",
+        "label": "Southbank",
+        "symbol": "underwater_sensor",
+        "status": "available",
+        "diagram_position": { "x": 56, "y": 78 }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "AST-SNS-004",
+      "geometry": { "type": "Point", "coordinates": [16.29, 58.67] },
+      "properties": {
+        "asset_id": "AST-SNS-004",
+        "name": "Westshoal Coastal Sensor",
+        "feature_type": "sensor",
+        "asset_type": "coastal_sensor",
+        "label": "Westshoal",
+        "symbol": "coastal_sensor",
+        "status": "available",
+        "diagram_position": { "x": 8, "y": 56 }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "AST-BASE-001",
+      "geometry": { "type": "Point", "coordinates": [18.54, 59.02] },
+      "properties": {
+        "asset_id": "AST-BASE-001",
+        "name": "Northhaven Naval Support Base",
+        "feature_type": "base",
+        "asset_type": "naval_base",
+        "label": "Northhaven",
+        "symbol": "naval_base",
+        "status": "available",
+        "diagram_position": { "x": 38, "y": 42 }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "AST-BASE-002",
+      "geometry": { "type": "Point", "coordinates": [20.76, 58.94] },
+      "properties": {
+        "asset_id": "AST-BASE-002",
+        "name": "Eastgate Maritime Base",
+        "feature_type": "base",
+        "asset_type": "naval_base",
+        "label": "Eastgate",
+        "symbol": "naval_base",
+        "status": "available",
+        "diagram_position": { "x": 68, "y": 44 }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "AST-DEP-001",
+      "geometry": { "type": "Point", "coordinates": [18.31, 59.16] },
+      "properties": {
+        "asset_id": "AST-DEP-001",
+        "name": "Harborview Strategic Spares Depot",
+        "feature_type": "depot",
+        "asset_type": "spares_depot",
+        "label": "Harborview",
+        "symbol": "spares_depot",
+        "status": "available",
+        "diagram_position": { "x": 35, "y": 39 }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "AST-DEP-002",
+      "geometry": { "type": "Point", "coordinates": [20.19, 58.36] },
+      "properties": {
+        "asset_id": "AST-DEP-002",
+        "name": "Inland Contingency Depot",
+        "feature_type": "depot",
+        "asset_type": "spares_depot",
+        "label": "Inland Contingency Area",
+        "symbol": "spares_depot",
+        "status": "limited_availability",
+        "diagram_position": { "x": 59, "y": 64 }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "AST-MNT-001",
+      "geometry": { "type": "Point", "coordinates": [18.67, 58.77] },
+      "properties": {
+        "asset_id": "AST-MNT-001",
+        "name": "Fjordworks Maintenance Facility",
+        "feature_type": "maintenance_site",
+        "asset_type": "maintenance_facility",
+        "label": "Fjordworks",
+        "symbol": "maintenance_facility",
+        "status": "available",
+        "diagram_position": { "x": 40, "y": 50 }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "AST-MNT-002",
+      "geometry": { "type": "Point", "coordinates": [20.91, 57.96] },
+      "properties": {
+        "asset_id": "AST-MNT-002",
+        "name": "Seagate Sensor Maintenance Site",
+        "feature_type": "maintenance_site",
+        "asset_type": "maintenance_facility",
+        "label": "Seagate",
+        "symbol": "maintenance_facility",
+        "status": "available",
+        "diagram_position": { "x": 71, "y": 72 }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "AST-COMMS-001",
+      "geometry": { "type": "Point", "coordinates": [18.82, 59.41] },
+      "properties": {
+        "asset_id": "AST-COMMS-001",
+        "name": "Northhaven Communications Relay",
+        "feature_type": "communications_node",
+        "asset_type": "communications_relay",
+        "label": "Northhaven Relay Ridge",
+        "symbol": "communications_relay",
+        "status": "available",
+        "diagram_position": { "x": 42, "y": 32 }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "AST-COMMS-002",
+      "geometry": { "type": "Point", "coordinates": [21.12, 59.24] },
+      "properties": {
+        "asset_id": "AST-COMMS-002",
+        "name": "Eastgate Communications Relay",
+        "feature_type": "communications_node",
+        "asset_type": "communications_relay",
+        "label": "Eastgate Relay Hill",
+        "symbol": "communications_relay",
+        "status": "available",
+        "diagram_position": { "x": 73, "y": 37 }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "AST-COMMS-003",
+      "geometry": { "type": "Point", "coordinates": [17.57, 58.06] },
+      "properties": {
+        "asset_id": "AST-COMMS-003",
+        "name": "Offshore Mesh Gateway",
+        "feature_type": "communications_node",
+        "asset_type": "communications_gateway",
+        "label": "West Baltic Offshore Box",
+        "symbol": "communications_gateway",
+        "status": "degraded",
+        "diagram_position": { "x": 25, "y": 75 }
+      }
+    },
+    {
+      "type": "Feature",
+      "id": "AST-LOG-001",
+      "geometry": { "type": "Point", "coordinates": [19.37, 58.61] },
+      "properties": {
+        "asset_id": "AST-LOG-001",
+        "name": "Coastal Distribution Node",
+        "feature_type": "logistics_node",
+        "asset_type": "logistics_node",
+        "label": "Central Coastal Distribution Corridor",
+        "symbol": "logistics_node",
+        "status": "available",
+        "diagram_position": { "x": 50, "y": 55 }
+      }
+    }
+  ]
+}

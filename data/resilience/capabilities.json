@@ -1,0 +1,379 @@
+{
+  "dataset": {
+    "name": "Notional Nordic Maritime Resilience Challenge — Capability Model",
+    "version": "0.1.0",
+    "classification": "Synthetic, non-classified, non-export-controlled",
+    "fictionalisation_notice": "All capabilities, index values, contribution weights, thresholds and relationships are fictional, abstract and intended only for hackathon prototyping. They do not represent real operational performance, readiness, coverage or force structure.",
+    "generated_for": "Industrial AI Hackathon — Resilience Challenge"
+  },
+  "scoring_method": {
+    "description": "A simple synthetic capability index. Teams may use or replace this baseline method. For each capability, sum the contribution weights of available assets, adjusted by asset readiness and health. Apply scenario effects and dependency-loss degradation where relevant. Clamp the final index to the 0.00–1.00 range.",
+    "formula": "capability_index = min(1.00, sum(contribution_weight * asset_health_score * asset_readiness_score * scenario_modifier))",
+    "interpretation": {
+      "0.80_to_1.00": "resilient",
+      "0.60_to_0.79": "strained",
+      "0.40_to_0.59": "degraded",
+      "0.00_to_0.39": "critical"
+    },
+    "important_note": "This is a hackathon baseline only. It is not a validated operational model and must not be used for real-world planning or decision-making."
+  },
+  "capabilities": [
+    {
+      "capability_id": "CAP-001",
+      "name": "Coastal Situational Awareness",
+      "description": "Abstract ability to maintain timely awareness across the fictional coastal operating area using sensor inputs, communications relays and supporting maritime platforms.",
+      "domain": "surveillance",
+      "unit": "capability_index",
+      "baseline_target_index": 0.8,
+      "warning_threshold": 0.6,
+      "critical_threshold": 0.4,
+      "primary_risk_drivers": [
+        "loss_of_coastal_sensor",
+        "communications_relay_degradation",
+        "site_service_disruption",
+        "delayed_sensor_maintenance"
+      ],
+      "recommended_resilience_actions": [
+        "Restore or reroute communications paths for high-contribution sensor nodes.",
+        "Prioritise maintenance and calibration for degraded sensor assets.",
+        "Use overlapping synthetic sensor coverage to protect the capability index during outages.",
+        "Pre-position site-service restoration items for critical relay and sensor locations."
+      ],
+      "contributions": [
+        {
+          "asset_id": "AST-SNS-001",
+          "contribution_weight": 0.24,
+          "contribution_role": "primary_coastal_sensor",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-012", "DEP-013", "DEP-014"],
+          "degradation_note": "Loss of communications or site services substantially reduces this contribution."
+        },
+        {
+          "asset_id": "AST-SNS-002",
+          "contribution_weight": 0.2,
+          "contribution_role": "eastern_coastal_sensor",
+          "minimum_asset_status": "degraded",
+          "dependency_ids": ["DEP-015", "DEP-016"],
+          "degradation_note": "Current synthetic degraded health already reduces this contribution."
+        },
+        {
+          "asset_id": "AST-SNS-004",
+          "contribution_weight": 0.16,
+          "contribution_role": "western_overlap_sensor",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-019", "DEP-020"],
+          "degradation_note": "Provides partial redundancy for Northpoint sensor loss."
+        },
+        {
+          "asset_id": "AST-COMMS-001",
+          "contribution_weight": 0.16,
+          "contribution_role": "primary_data_relay",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-031"],
+          "degradation_note": "Loss restricts the ability to share otherwise available sensor information."
+        },
+        {
+          "asset_id": "AST-COMMS-002",
+          "contribution_weight": 0.12,
+          "contribution_role": "regional_data_relay",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-032"],
+          "degradation_note": "Offers alternate relay capacity for some eastern sensor routes."
+        },
+        {
+          "asset_id": "AST-PLT-002",
+          "contribution_weight": 0.12,
+          "contribution_role": "mobile_surface_observation",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-005", "DEP-007"],
+          "degradation_note": "Can provide limited mobile observation but does not replace fixed sensor coverage."
+        }
+      ]
+    },
+    {
+      "capability_id": "CAP-002",
+      "name": "Subsurface Detection Continuity",
+      "description": "Abstract ability to sustain fictional subsurface-detection activity through a combination of underwater sensing, platform availability, specialist maintenance and communications support.",
+      "domain": "subsurface_surveillance",
+      "unit": "capability_index",
+      "baseline_target_index": 0.75,
+      "warning_threshold": 0.55,
+      "critical_threshold": 0.35,
+      "primary_risk_drivers": [
+        "underwater_sensor_outage",
+        "specialist_maintenance_unavailability",
+        "long_lead_sensor_spare_shortage",
+        "offshore_gateway_degradation"
+      ],
+      "recommended_resilience_actions": [
+        "Protect maintenance capacity for underwater sensor restoration.",
+        "Prioritise procurement or allocation of long-lead underwater sensor spares.",
+        "Defer planned maintenance only when coverage and safety assumptions permit.",
+        "Validate alternate connectivity paths when the offshore gateway is degraded."
+      ],
+      "contributions": [
+        {
+          "asset_id": "AST-SNS-003",
+          "contribution_weight": 0.3,
+          "contribution_role": "primary_underwater_sensor",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-017", "DEP-018"],
+          "degradation_note": "A major fault combined with the unavailable long-lead cable assembly causes a significant capability loss."
+        },
+        {
+          "asset_id": "AST-PLT-001",
+          "contribution_weight": 0.28,
+          "contribution_role": "subsurface_platform_presence",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-001", "DEP-002", "DEP-003", "DEP-004"],
+          "degradation_note": "Contribution depends on platform readiness, maintenance support, supply support and coordination confidence."
+        },
+        {
+          "asset_id": "AST-MNT-002",
+          "contribution_weight": 0.16,
+          "contribution_role": "specialist_sensor_restoration",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-030"],
+          "degradation_note": "Constrains restoration time for underwater-sensor faults."
+        },
+        {
+          "asset_id": "AST-COMMS-003",
+          "contribution_weight": 0.14,
+          "contribution_role": "offshore_connectivity_extension",
+          "minimum_asset_status": "degraded",
+          "dependency_ids": ["DEP-033", "DEP-034"],
+          "degradation_note": "Current degraded state reduces redundancy and confidence in reporting continuity."
+        },
+        {
+          "asset_id": "AST-DEP-002",
+          "contribution_weight": 0.12,
+          "contribution_role": "contingency_sensor_spares",
+          "minimum_asset_status": "limited_availability",
+          "dependency_ids": ["DEP-030"],
+          "degradation_note": "Supports recovery only when critical items are available and throughput permits release."
+        }
+      ]
+    },
+    {
+      "capability_id": "CAP-003",
+      "name": "Maritime Response Readiness",
+      "description": "Abstract ability to deploy and sustain fictional surface and subsurface response platforms through access to bases, maintenance facilities, logistics nodes and critical inventory.",
+      "domain": "maritime_response",
+      "unit": "capability_index",
+      "baseline_target_index": 0.8,
+      "warning_threshold": 0.6,
+      "critical_threshold": 0.4,
+      "primary_risk_drivers": [
+        "base_unavailability",
+        "platform_corrective_maintenance",
+        "maintenance_capacity_constraint",
+        "critical_spare_reservation_or_stockout",
+        "last_mile_distribution_delay"
+      ],
+      "recommended_resilience_actions": [
+        "Reserve base capacity for high-criticality platform support.",
+        "Prioritise corrective work that restores the largest readiness contribution.",
+        "Use alternate support locations where capacity and dependencies permit.",
+        "Allocate reserved critical spares transparently against capability impact.",
+        "Use the logistics-support platform as an alternate distribution route when appropriate."
+      ],
+      "contributions": [
+        {
+          "asset_id": "AST-PLT-001",
+          "contribution_weight": 0.2,
+          "contribution_role": "subsurface_response_platform",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-001", "DEP-002", "DEP-003"],
+          "degradation_note": "Readiness falls if primary basing, specialist maintenance or spares support is disrupted."
+        },
+        {
+          "asset_id": "AST-PLT-002",
+          "contribution_weight": 0.24,
+          "contribution_role": "surface_response_platform",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-005", "DEP-006", "DEP-007"],
+          "degradation_note": "Forward-base capacity and communications availability influence readiness."
+        },
+        {
+          "asset_id": "AST-PLT-003",
+          "contribution_weight": 0.16,
+          "contribution_role": "recoverable_surface_response_platform",
+          "minimum_asset_status": "limited_availability",
+          "dependency_ids": ["DEP-008", "DEP-009"],
+          "degradation_note": "Currently limited by corrective maintenance and supply status; restoration is a key resilience lever."
+        },
+        {
+          "asset_id": "AST-BASE-001",
+          "contribution_weight": 0.16,
+          "contribution_role": "primary_support_base",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-021", "DEP-022", "DEP-023"],
+          "degradation_note": "A seven-day synthetic closure has cascading effect on berthing, repair and resupply."
+        },
+        {
+          "asset_id": "AST-BASE-002",
+          "contribution_weight": 0.12,
+          "contribution_role": "forward_support_base",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-024", "DEP-025"],
+          "degradation_note": "Acts as a partial alternate but is subject to a synthetic capacity constraint."
+        },
+        {
+          "asset_id": "AST-MNT-001",
+          "contribution_weight": 0.12,
+          "contribution_role": "platform_maintenance_capacity",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-028", "DEP-029"],
+          "degradation_note": "Current capacity constraint slows restoration of high-value platform contributions."
+        }
+      ]
+    },
+    {
+      "capability_id": "CAP-004",
+      "name": "Distributed Support and Sustainment",
+      "description": "Abstract ability to move, allocate and restore critical synthetic support resources across bases, depots, maintenance sites and distribution nodes.",
+      "domain": "logistics",
+      "unit": "capability_index",
+      "baseline_target_index": 0.78,
+      "warning_threshold": 0.58,
+      "critical_threshold": 0.38,
+      "primary_risk_drivers": [
+        "strategic_depot_stockout",
+        "contingency_depot_throughput_constraint",
+        "last_mile_transport_delay",
+        "maintenance_facility_spares_dependency",
+        "loss_of_logistics_support_platform"
+      ],
+      "recommended_resilience_actions": [
+        "Pre-position high-criticality spares at alternate support locations.",
+        "Use criticality and capability impact to prioritise issue of reserved stock.",
+        "Reroute selected deliveries through the logistics-support platform.",
+        "Protect distribution-node capacity for maintenance and communications restoration items.",
+        "Use substitutes only when their capability and duration constraints are visible to the operator."
+      ],
+      "contributions": [
+        {
+          "asset_id": "AST-DEP-001",
+          "contribution_weight": 0.24,
+          "contribution_role": "strategic_spares_stock",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-021", "DEP-026"],
+          "degradation_note": "Primary source for several high-criticality synthetic spare items."
+        },
+        {
+          "asset_id": "AST-DEP-002",
+          "contribution_weight": 0.16,
+          "contribution_role": "contingency_stock_and_rerouting",
+          "minimum_asset_status": "limited_availability",
+          "dependency_ids": ["DEP-024", "DEP-027", "DEP-030"],
+          "degradation_note": "Provides alternate stock paths but has reduced throughput in the baseline event set."
+        },
+        {
+          "asset_id": "AST-LOG-001",
+          "contribution_weight": 0.2,
+          "contribution_role": "last_mile_distribution",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-035", "DEP-036"],
+          "degradation_note": "Distribution delay affects both support bases and the primary maintenance facility."
+        },
+        {
+          "asset_id": "AST-PLT-004",
+          "contribution_weight": 0.16,
+          "contribution_role": "alternate_logistics_route",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-010", "DEP-011", "DEP-034"],
+          "degradation_note": "Can provide an alternate route, but cannot replace all land-side throughput."
+        },
+        {
+          "asset_id": "AST-MNT-001",
+          "contribution_weight": 0.12,
+          "contribution_role": "repair_demand_conversion",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-028", "DEP-029"],
+          "degradation_note": "Maintenance capacity and incoming spares jointly determine restoration throughput."
+        },
+        {
+          "asset_id": "AST-BASE-001",
+          "contribution_weight": 0.12,
+          "contribution_role": "primary_distribution_endpoint",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-021", "DEP-035"],
+          "degradation_note": "A base closure reduces the utility of otherwise available supplies."
+        }
+      ]
+    },
+    {
+      "capability_id": "CAP-005",
+      "name": "Operational Coordination Continuity",
+      "description": "Abstract ability to maintain trusted coordination and information flow between fictional platforms, sensors, support bases and maritime support nodes during disruption.",
+      "domain": "communications",
+      "unit": "capability_index",
+      "baseline_target_index": 0.82,
+      "warning_threshold": 0.62,
+      "critical_threshold": 0.42,
+      "primary_risk_drivers": [
+        "primary_relay_failure",
+        "site_service_failure",
+        "offshore_gateway_degradation",
+        "simultaneous_loss_of_relay_redundancy",
+        "base_coordination_outage"
+      ],
+      "recommended_resilience_actions": [
+        "Complete backup site-service validation for critical relay locations.",
+        "Re-route dependent nodes through available alternate relays.",
+        "Prioritise backup power and relay-interface spares to preserve network continuity.",
+        "Use degraded-mode procedures with explicit confidence indications rather than presenting false certainty."
+      ],
+      "contributions": [
+        {
+          "asset_id": "AST-COMMS-001",
+          "contribution_weight": 0.28,
+          "contribution_role": "primary_coordination_relay",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-022", "DEP-031"],
+          "degradation_note": "A critical relay whose site-service resilience is challenged by an overdue synthetic test."
+        },
+        {
+          "asset_id": "AST-COMMS-002",
+          "contribution_weight": 0.24,
+          "contribution_role": "regional_coordination_relay",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-025", "DEP-032"],
+          "degradation_note": "Provides regional continuity and limited fallback capacity."
+        },
+        {
+          "asset_id": "AST-COMMS-003",
+          "contribution_weight": 0.14,
+          "contribution_role": "offshore_redundancy_gateway",
+          "minimum_asset_status": "degraded",
+          "dependency_ids": ["DEP-033", "DEP-034"],
+          "degradation_note": "Current degraded state lowers redundancy and makes a second relay loss more consequential."
+        },
+        {
+          "asset_id": "AST-BASE-001",
+          "contribution_weight": 0.12,
+          "contribution_role": "primary_coordination_site",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-022"],
+          "degradation_note": "Hosts synthetic primary coordination and relay-support functions."
+        },
+        {
+          "asset_id": "AST-BASE-002",
+          "contribution_weight": 0.1,
+          "contribution_role": "alternate_coordination_site",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-025"],
+          "degradation_note": "Provides partial alternate coordination capacity under constrained baseline readiness."
+        },
+        {
+          "asset_id": "AST-PLT-002",
+          "contribution_weight": 0.12,
+          "contribution_role": "mobile_coordination_endpoint",
+          "minimum_asset_status": "available",
+          "dependency_ids": ["DEP-007"],
+          "degradation_note": "Offers limited mobile continuity but depends on the regional relay path."
+        }
+      ]
+    }
+  ]
+}

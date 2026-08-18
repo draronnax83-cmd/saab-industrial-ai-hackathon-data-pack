@@ -1,0 +1,351 @@
+{
+  "dataset": {
+    "name": "Notional Maritime Production & Support Challenge — Report Template Library",
+    "version": "0.1.0",
+    "classification": "Synthetic, non-classified, non-export-controlled",
+    "fictionalisation_notice": "All report templates, checklists, evidence requirements, signatures, fields and acceptance logic are fictional and simplified for hackathon prototyping. They are not real work instructions, quality records, maintenance releases, safety documents or engineering approvals.",
+    "generated_for": "Industrial AI Hackathon — Operational Co-pilot Challenge",
+    "source_files": ["systems.json", "tasks.json", "information-objects.json", "configuration-rules.json", "issue-history.json"]
+  },
+  "template_types": [
+    "maintenance_installation_report",
+    "inspection_report",
+    "test_and_configuration_closure_report"
+  ],
+  "templates": [
+    {
+      "template_id": "RPT-TPL-APR-INSTALL",
+      "template_type": "maintenance_installation_report",
+      "title": "Sensor Processing Rack Installation / Corrective Maintenance Report",
+      "revision": "A",
+      "applicable_system_types": ["sensor_processing_rack"],
+      "applicable_task_types": ["installation", "corrective_maintenance"],
+      "applicable_models": ["APR-220", "APR-180"],
+      "purpose": "Capture a synthetic record of module installation or corrective maintenance, including configuration applicability, procedure evidence, physical checks and release for post-maintenance test.",
+      "prefill_fields": [
+        "platform_id",
+        "platform_name",
+        "compartment_id",
+        "compartment_name",
+        "system_id",
+        "system_name",
+        "system_model",
+        "system_configuration_revision",
+        "software_revision",
+        "task_id",
+        "task_title",
+        "task_type",
+        "required_information_object_ids",
+        "applicable_document_set",
+        "known_config_issue_description"
+      ],
+      "required_fields": [
+        "completed_by",
+        "completion_date",
+        "procedure_revision_used",
+        "installed_or_replaced_item_identifier",
+        "configuration_revision_confirmed",
+        "work_summary",
+        "checklist_status",
+        "deviations",
+        "release_decision"
+      ],
+      "checklist_items": [
+        {
+          "checklist_item_id": "APR-INST-01",
+          "text": "Confirm platform, compartment, system model and configuration revision before starting work.",
+          "required": true,
+          "evidence_type": "record_reference",
+          "related_rule_id": "CFG-RULE-008"
+        },
+        {
+          "checklist_item_id": "APR-INST-02",
+          "text": "Confirm the selected installation procedure and drawing are applicable to the installed configuration revision.",
+          "required": true,
+          "evidence_type": "information_object_ids",
+          "related_rule_id": "CFG-RULE-001"
+        },
+        {
+          "checklist_item_id": "APR-INST-03",
+          "text": "Verify isolation, ESD protection and lifting-plan requirements before module handling.",
+          "required": true,
+          "evidence_type": "operator_confirmation",
+          "related_information_object_id": "INFO-SAFETY-SENSOR-BAY-01"
+        },
+        {
+          "checklist_item_id": "APR-INST-04",
+          "text": "Record installed or replaced module identifier and relevant traceability information.",
+          "required": true,
+          "evidence_type": "free_text"
+        },
+        {
+          "checklist_item_id": "APR-INST-05",
+          "text": "Record bracket type, harness route and mounting-torque value from the applicable synthetic procedure.",
+          "required": true,
+          "evidence_type": "structured_measurement",
+          "related_information_object_id": "INFO-APR-INST-REV-D"
+        },
+        {
+          "checklist_item_id": "APR-INST-06",
+          "text": "Confirm cooling-line clearance and visible strain relief after installation.",
+          "required": true,
+          "evidence_type": "operator_confirmation"
+        },
+        {
+          "checklist_item_id": "APR-INST-07",
+          "text": "Create or link the mandatory post-maintenance test task before releasing the system.",
+          "required": true,
+          "evidence_type": "linked_task_id",
+          "related_rule_id": "CFG-RULE-002"
+        }
+      ],
+      "free_text_fields": [
+        {"field_id": "work_summary", "label": "Work performed", "required": true},
+        {"field_id": "deviations", "label": "Deviations and observations", "required": true},
+        {"field_id": "recommendations", "label": "Recommendations or follow-up actions", "required": false}
+      ],
+      "required_attachments": [
+        "applicable_procedure_reference",
+        "configuration_evidence",
+        "post_maintenance_test_reference"
+      ],
+      "release_options": ["released_for_post_maintenance_test", "blocked_pending_deviation", "engineering_review_required"],
+      "required_signoff_roles": ["qualified_technician", "configuration_controller"],
+      "validation_rules": [
+        "Selected procedure revision must be applicable to system configuration revision.",
+        "Release cannot be final return-to-service; mandatory post-maintenance test remains required.",
+        "All required checklist items must have a status and evidence reference."
+      ]
+    },
+    {
+      "template_id": "RPT-TPL-CDU-INSP",
+      "template_type": "inspection_report",
+      "title": "Cooling Distribution Unit Inspection and Rework Report",
+      "revision": "A",
+      "applicable_system_types": ["cooling_distribution_unit", "auxiliary_cooling_pump", "auxiliary_power_unit"],
+      "applicable_task_types": ["inspection", "corrective_maintenance"],
+      "applicable_models": ["CDU-90", "ACP-140", "APCU-75"],
+      "purpose": "Capture a synthetic inspection outcome, condition findings, safety checks, deviation disposition and any necessary corrective or test follow-up tasks.",
+      "prefill_fields": [
+        "platform_id",
+        "platform_name",
+        "compartment_id",
+        "compartment_name",
+        "system_id",
+        "system_name",
+        "system_model",
+        "system_configuration_revision",
+        "task_id",
+        "task_title",
+        "task_type",
+        "required_information_object_ids",
+        "applicable_document_set"
+      ],
+      "required_fields": [
+        "completed_by",
+        "inspection_date",
+        "inspection_procedure_revision_used",
+        "overall_condition",
+        "checklist_status",
+        "findings",
+        "finding_disposition",
+        "follow_on_action"
+      ],
+      "checklist_items": [
+        {
+          "checklist_item_id": "INSP-01",
+          "text": "Confirm safe access conditions, applicable isolation and required personal-protection controls.",
+          "required": true,
+          "evidence_type": "operator_confirmation",
+          "related_information_object_id": "INFO-SAFETY-MACHINERY-01"
+        },
+        {
+          "checklist_item_id": "INSP-02",
+          "text": "Confirm the inspection procedure is applicable to the selected system model and configuration revision.",
+          "required": true,
+          "evidence_type": "information_object_ids",
+          "related_rule_id": "CFG-RULE-008"
+        },
+        {
+          "checklist_item_id": "INSP-03",
+          "text": "Inspect mounting condition, line supports, visible connectors and access to local isolation or service panels.",
+          "required": true,
+          "evidence_type": "operator_confirmation"
+        },
+        {
+          "checklist_item_id": "INSP-04",
+          "text": "For CDU-90, record the measured synthetic cooling-line clearance from the adjacent cable route.",
+          "required": false,
+          "evidence_type": "structured_measurement",
+          "measurement_field": "cooling_line_clearance_mm",
+          "related_rule_id": "CFG-RULE-006"
+        },
+        {
+          "checklist_item_id": "INSP-05",
+          "text": "Record all findings and classify each as closed, accepted with limitation, or requiring corrective action.",
+          "required": true,
+          "evidence_type": "structured_finding_list"
+        },
+        {
+          "checklist_item_id": "INSP-06",
+          "text": "Link corrective work or functional verification when an open finding or physical-constraint violation exists.",
+          "required": true,
+          "evidence_type": "linked_task_id",
+          "related_rule_ids": ["CFG-RULE-006", "CFG-RULE-007"]
+        }
+      ],
+      "structured_fields": [
+        {
+          "field_id": "overall_condition",
+          "label": "Overall condition",
+          "allowed_values": ["serviceable", "serviceable_with_observation", "requires_corrective_action", "unsafe_to_test"]
+        },
+        {
+          "field_id": "cooling_line_clearance_mm",
+          "label": "Cooling-line clearance (synthetic mm)",
+          "data_type": "number",
+          "applicable_models": ["CDU-90"]
+        },
+        {
+          "field_id": "finding_disposition",
+          "label": "Finding disposition",
+          "allowed_values": ["closed", "accepted_with_limitations", "corrective_action_required", "engineering_review_required"]
+        }
+      ],
+      "free_text_fields": [
+        {"field_id": "findings", "label": "Findings and evidence", "required": true},
+        {"field_id": "follow_on_action", "label": "Follow-on task or action", "required": true},
+        {"field_id": "inspector_notes", "label": "Inspector notes", "required": false}
+      ],
+      "required_attachments": ["inspection_procedure_reference", "finding_evidence_or_note"],
+      "release_options": ["released_for_functional_test", "corrective_action_required", "blocked_pending_finding_review"],
+      "required_signoff_roles": ["qualified_inspector"],
+      "validation_rules": [
+        "A CDU-90 clearance below synthetic 40 mm requires corrective rework and functional verification.",
+        "A functional test cannot be released while a blocking inspection finding remains open.",
+        "All listed findings require a disposition."
+      ]
+    },
+    {
+      "template_id": "RPT-TPL-CONFIG-CLOSE",
+      "template_type": "test_and_configuration_closure_report",
+      "title": "Post-Maintenance Test and Configuration Closure Report",
+      "revision": "A",
+      "applicable_system_types": ["sensor_processing_rack", "mission_management_console", "secure_communications_gateway", "auxiliary_cooling_pump"],
+      "applicable_task_types": ["post_maintenance_test", "functional_test", "configuration_verification", "software_update"],
+      "applicable_models": ["APR-220", "APR-180", "MCS-NX-500", "SCG-210", "ACP-140"],
+      "purpose": "Capture synthetic post-maintenance test, configuration verification or update evidence required before a task package can be presented as complete or returned to an available state.",
+      "prefill_fields": [
+        "platform_id",
+        "platform_name",
+        "compartment_id",
+        "compartment_name",
+        "system_id",
+        "system_name",
+        "system_model",
+        "system_configuration_revision",
+        "software_revision",
+        "task_id",
+        "task_title",
+        "task_type",
+        "required_information_object_ids",
+        "applicable_document_set",
+        "linked_prior_task_ids"
+      ],
+      "required_fields": [
+        "completed_by",
+        "test_or_verification_date",
+        "procedure_or_checklist_revision_used",
+        "configuration_revision_confirmed",
+        "test_or_checklist_result",
+        "evidence_record_ids",
+        "deviation_status",
+        "closure_decision"
+      ],
+      "checklist_items": [
+        {
+          "checklist_item_id": "CLOSE-01",
+          "text": "Confirm platform, compartment, system, task and configuration revision context.",
+          "required": true,
+          "evidence_type": "record_reference",
+          "related_rule_id": "CFG-RULE-008"
+        },
+        {
+          "checklist_item_id": "CLOSE-02",
+          "text": "Confirm the procedure or checklist revision is applicable to the selected configuration.",
+          "required": true,
+          "evidence_type": "information_object_ids",
+          "related_rule_ids": ["CFG-RULE-001", "CFG-RULE-003", "CFG-RULE-005"]
+        },
+        {
+          "checklist_item_id": "CLOSE-03",
+          "text": "Confirm all prerequisite installation, maintenance or inspection tasks are complete or formally dispositioned.",
+          "required": true,
+          "evidence_type": "linked_task_id"
+        },
+        {
+          "checklist_item_id": "CLOSE-04",
+          "text": "Record the synthetic test, functional check or configuration-verification result.",
+          "required": true,
+          "evidence_type": "structured_result"
+        },
+        {
+          "checklist_item_id": "CLOSE-05",
+          "text": "For MCS-NX-500, confirm matching revision-C hardware and SW-4.0 software baseline evidence.",
+          "required": false,
+          "evidence_type": "structured_configuration_pair",
+          "related_rule_id": "CFG-RULE-004"
+        },
+        {
+          "checklist_item_id": "CLOSE-06",
+          "text": "For SCG-210 revision E, confirm use of the revision-E configuration checklist and required sign-offs.",
+          "required": false,
+          "evidence_type": "information_object_ids",
+          "related_rule_id": "CFG-RULE-005"
+        },
+        {
+          "checklist_item_id": "CLOSE-07",
+          "text": "Record unresolved deviations, limitations or engineering-review needs before closure decision.",
+          "required": true,
+          "evidence_type": "structured_finding_list"
+        }
+      ],
+      "structured_fields": [
+        {
+          "field_id": "test_or_checklist_result",
+          "label": "Test or checklist result",
+          "allowed_values": ["pass", "fail", "conditional", "verified", "not_verified"]
+        },
+        {
+          "field_id": "deviation_status",
+          "label": "Deviation status",
+          "allowed_values": ["none", "closed", "accepted_with_limitations", "open", "engineering_review_required"]
+        },
+        {
+          "field_id": "closure_decision",
+          "label": "Closure decision",
+          "allowed_values": ["complete", "complete_with_limitations", "blocked", "engineering_review_required"]
+        }
+      ],
+      "free_text_fields": [
+        {"field_id": "test_summary", "label": "Test or verification summary", "required": true},
+        {"field_id": "deviations_and_limitations", "label": "Deviations and limitations", "required": true},
+        {"field_id": "recommended_follow_up", "label": "Recommended follow-up", "required": false}
+      ],
+      "required_attachments": [
+        "applicable_procedure_or_checklist_reference",
+        "task_evidence_reference",
+        "test_or_verification_result_reference"
+      ],
+      "release_options": ["complete", "complete_with_limitations", "blocked", "engineering_review_required"],
+      "required_signoff_roles": ["qualified_test_engineer_or_system_engineer", "configuration_controller"],
+      "validation_rules": [
+        "A failed result cannot produce a complete closure decision.",
+        "A missing evidence record must result in insufficient-data or review-required status.",
+        "APR maintenance closure requires accepted post-maintenance test evidence.",
+        "MCS software-update acceptance requires matching hardware/software evidence.",
+        "SCG revision-E verification requires revision-E checklist evidence."
+      ]
+    }
+  ]
+}

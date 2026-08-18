@@ -1,0 +1,216 @@
+{
+  "dataset": {
+    "name": "Notional Maritime Production & Support Challenge — Configuration Rules Register",
+    "version": "0.1.0",
+    "classification": "Synthetic, non-classified, non-export-controlled",
+    "fictionalisation_notice": "All configuration rules, incompatibilities, effectivity constraints, actions and technical conditions are fictional and simplified for hackathon prototyping. They do not represent real engineering, product configuration, airworthiness, seaworthiness, cyber-security or maintenance-release rules.",
+    "generated_for": "Industrial AI Hackathon — Operational Co-pilot Challenge",
+    "source_files": ["systems.json", "tasks.json", "information-objects.json"]
+  },
+  "rule_types": [
+    "document_applicability",
+    "hardware_software_compatibility",
+    "mandatory_test",
+    "task_sequence",
+    "physical_constraint",
+    "checklist_applicability",
+    "configuration_evidence"
+  ],
+  "severity_values": ["info", "warning", "major", "critical"],
+  "rules": [
+    {
+      "rule_id": "CFG-RULE-001",
+      "title": "APR-220 Revision-D Installation Procedure Applicability",
+      "rule_type": "document_applicability",
+      "severity": "critical",
+      "applies_to": {
+        "system_type": "sensor_processing_rack",
+        "model": "APR-220",
+        "configuration_revisions": ["D"],
+        "task_types": ["corrective_maintenance", "installation"]
+      },
+      "conditions": {
+        "required_information_object_ids": ["INFO-APR-INST-REV-D"],
+        "disallowed_information_object_ids": ["INFO-APR-INST-REV-B", "INFO-APR-DWG-REV-B"],
+        "required_document_set": "DOCSET-APR-D"
+      },
+      "violation_message": "APR-220 configuration revision D must use the revision-D installation procedure and arrangement description. Legacy revision-B instructions are incompatible.",
+      "required_action": "block_task_start_and_request_current_procedure",
+      "evidence_to_display": ["SYS-002", "INFO-APR-INST-REV-D", "INFO-APR-INST-REV-B", "INFO-APR-DWG-REV-D"],
+      "rationale": "Synthetic revision-D configuration uses bracket type D, harness route D and a different mounting-torque value from revision B.",
+      "test_case_hint": "Select TASK-001 and intentionally retrieve INFO-APR-INST-REV-B to demonstrate the violation."
+    },
+    {
+      "rule_id": "CFG-RULE-002",
+      "title": "APR Module Replacement Requires Accepted Post-Maintenance Test",
+      "rule_type": "mandatory_test",
+      "severity": "critical",
+      "applies_to": {
+        "system_type": "sensor_processing_rack",
+        "models": ["APR-220", "APR-180"],
+        "task_types": ["corrective_maintenance", "installation"]
+      },
+      "conditions": {
+        "trigger_tasks": ["TASK-001", "TASK-014"],
+        "required_follow_on_task_type": "post_maintenance_test",
+        "required_information_object_id": "INFO-APR-TEST-POST-01",
+        "accepted_result_values": ["pass"],
+        "must_complete_before": ["configuration_closure", "return_to_service"]
+      },
+      "violation_message": "Sensor-rack maintenance cannot be closed or released until the required post-maintenance test has an accepted result.",
+      "required_action": "block_maintenance_closure_and_create_test_action",
+      "evidence_to_display": ["TASK-001", "TASK-002", "TASK-003", "INFO-APR-TEST-POST-01", "INFO-APR-CONFIG-CLOSE-01"],
+      "rationale": "Synthetic task workflow requires evidence of functional, self-test, interface, cooling-path and signal-path checks.",
+      "test_case_hint": "Attempt to close TASK-003 while TASK-002 has no accepted test result."
+    },
+    {
+      "rule_id": "CFG-RULE-003",
+      "title": "APR-180 Revision-C Procedure and Drawing Effectivity",
+      "rule_type": "document_applicability",
+      "severity": "major",
+      "applies_to": {
+        "system_type": "sensor_processing_rack",
+        "model": "APR-180",
+        "configuration_revisions": ["C"],
+        "task_types": ["corrective_maintenance", "installation", "post_maintenance_test"]
+      },
+      "conditions": {
+        "required_information_object_ids": ["INFO-APR-INST-REV-C", "INFO-APR-DWG-REV-C", "INFO-APR-TEST-POST-01"],
+        "disallowed_document_sets": ["DOCSET-APR-B", "DOCSET-APR-D"],
+        "required_document_set": "DOCSET-APR-C"
+      },
+      "violation_message": "APR-180 configuration revision C requires the APR-C document set. APR-220 documents do not establish applicability for this equipment model.",
+      "required_action": "warn_and_request_correct_document_set",
+      "evidence_to_display": ["SYS-010", "TASK-014", "TASK-015", "INFO-APR-INST-REV-C", "INFO-APR-DWG-REV-C"],
+      "rationale": "Synthetic APR-180 configuration-C equipment uses a distinct mounting arrangement and traceability workflow.",
+      "test_case_hint": "Select TASK-014 and compare the applicable APR-C documents with the APR-D procedure."
+    },
+    {
+      "rule_id": "CFG-RULE-004",
+      "title": "MCS-NX-500 Hardware and Software Update Compatibility",
+      "rule_type": "hardware_software_compatibility",
+      "severity": "critical",
+      "applies_to": {
+        "system_type": "mission_management_console",
+        "model": "MCS-NX-500",
+        "configuration_revisions": ["C"],
+        "task_types": ["installation", "software_update", "post_maintenance_test"]
+      },
+      "conditions": {
+        "hardware_installation_task_id": "TASK-008",
+        "software_update_task_id": "TASK-009",
+        "acceptance_test_task_id": "TASK-010",
+        "required_hardware_revision": "C",
+        "required_software_revision": "SW-4.0",
+        "required_information_object_ids": ["INFO-MCS-INST-REV-C", "INFO-MCS-SW-UPDATE-REV-C", "INFO-MCS-FUNC-TEST-01"],
+        "required_task_sequence": ["TASK-008", "TASK-009", "TASK-010"]
+      },
+      "violation_message": "MCS-NX-500 software baseline SW-4.0 cannot be applied or accepted until the matching revision-C hardware update is installed and evidenced.",
+      "required_action": "block_software_update_or_acceptance_test_until_hardware_evidence_exists",
+      "evidence_to_display": ["SYS-005", "TASK-008", "TASK-009", "TASK-010", "INFO-MCS-SW-UPDATE-REV-C"],
+      "rationale": "Synthetic hardware/software pairing rule prevents mixed-baseline configuration.",
+      "test_case_hint": "Attempt TASK-009 before TASK-008 is complete to demonstrate a blocked update."
+    },
+    {
+      "rule_id": "CFG-RULE-005",
+      "title": "SCG-210 Revision-E Checklist Applicability",
+      "rule_type": "checklist_applicability",
+      "severity": "critical",
+      "applies_to": {
+        "system_type": "secure_communications_gateway",
+        "model": "SCG-210",
+        "configuration_revisions": ["E"],
+        "task_types": ["configuration_verification"]
+      },
+      "conditions": {
+        "required_information_object_ids": ["INFO-SCG-CONFIG-REV-E", "INFO-SCG-CHECKLIST-01"],
+        "disallowed_information_object_ids": ["INFO-SCG-CHECKLIST-REV-C"],
+        "required_checklist_revision": "E",
+        "required_document_set": "DOCSET-SCG-E"
+      },
+      "violation_message": "SCG-210 configuration revision E must be verified using the revision-E checklist. The revision-C checklist is obsolete and cannot provide configuration evidence.",
+      "required_action": "block_configuration_verification_and_request_revision_E_checklist",
+      "evidence_to_display": ["SYS-007", "TASK-011", "INFO-SCG-CONFIG-REV-E", "INFO-SCG-CHECKLIST-01", "INFO-SCG-CHECKLIST-REV-C"],
+      "rationale": "Synthetic gateway revision-E verification introduces evidence and sign-off requirements not present in the legacy checklist.",
+      "test_case_hint": "Select TASK-011 and retrieve the revision-C checklist to demonstrate an explicit mismatch."
+    },
+    {
+      "rule_id": "CFG-RULE-006",
+      "title": "CDU-90 Cooling Clearance and Functional-Test Rule",
+      "rule_type": "physical_constraint",
+      "severity": "major",
+      "applies_to": {
+        "system_type": "cooling_distribution_unit",
+        "model": "CDU-90",
+        "configuration_revisions": ["C"],
+        "task_types": ["inspection", "corrective_maintenance", "functional_test"]
+      },
+      "conditions": {
+        "minimum_cable_clearance_mm": 40,
+        "inspection_task_id": "TASK-004",
+        "rework_task_id": "TASK-005",
+        "functional_test_task_id": "TASK-006",
+        "required_information_object_ids": ["INFO-CDU-INSP-REV-C", "INFO-CDU-REWORK-REV-C", "INFO-CDU-FUNC-TEST-01", "INFO-CDU-DWG-REV-C"],
+        "if_clearance_below_mm": 40,
+        "then_require": ["TASK-005", "TASK-006"]
+      },
+      "violation_message": "A cooling-line clearance below the synthetic 40 mm threshold requires routing rework and a subsequent functional verification before return to service.",
+      "required_action": "create_corrective_task_and_block_return_to_service_until_functional_test_passes",
+      "evidence_to_display": ["SYS-003", "TASK-004", "TASK-005", "TASK-006", "INFO-CDU-DWG-REV-C"],
+      "rationale": "Synthetic physical-constraint rule ties an inspection finding to mandatory corrective and test workflow steps.",
+      "test_case_hint": "Create a mock inspection result with 25 mm clearance to generate the follow-on workflow."
+    },
+    {
+      "rule_id": "CFG-RULE-007",
+      "title": "ACP-140 Inspection Finding Must Be Resolved Before Functional Test",
+      "rule_type": "task_sequence",
+      "severity": "major",
+      "applies_to": {
+        "system_type": "auxiliary_cooling_pump",
+        "model": "ACP-140",
+        "configuration_revisions": ["B"],
+        "task_types": ["inspection", "functional_test"]
+      },
+      "conditions": {
+        "inspection_task_id": "TASK-012",
+        "functional_test_task_id": "TASK-013",
+        "required_information_object_ids": ["INFO-ACP-INSP-REV-B", "INFO-ACP-FUNC-TEST-01"],
+        "required_precondition": "inspection_findings_closed_or_accepted",
+        "block_if_task_status": "blocked"
+      },
+      "violation_message": "ACP-140 functional verification cannot begin while an inspection finding remains open or unreviewed.",
+      "required_action": "block_functional_test_and_request_finding_review",
+      "evidence_to_display": ["SYS-008", "TASK-012", "TASK-013", "INFO-ACP-INSP-REV-B", "INFO-ACP-FUNC-TEST-01"],
+      "rationale": "Synthetic workflow rule prevents a test from masking an unresolved inspection issue.",
+      "test_case_hint": "Use TASK-012 status awaiting_test and TASK-013 status blocked to show the required review gate."
+    },
+    {
+      "rule_id": "CFG-RULE-008",
+      "title": "Configuration Closure Requires Traceable Evidence",
+      "rule_type": "configuration_evidence",
+      "severity": "major",
+      "applies_to": {
+        "system_types": ["sensor_processing_rack", "mission_management_console", "secure_communications_gateway"],
+        "task_types": ["configuration_verification", "post_maintenance_test", "software_update"]
+      },
+      "conditions": {
+        "minimum_required_evidence": [
+          "platform_id",
+          "compartment_id",
+          "system_id",
+          "system_configuration_revision",
+          "applicable_information_object_ids",
+          "task_id",
+          "operator_or_technician_note",
+          "test_or_checklist_result"
+        ],
+        "if_any_evidence_missing": "insufficient_data"
+      },
+      "violation_message": "Configuration status cannot be presented as verified or complete when required synthetic traceability evidence is missing.",
+      "required_action": "show_insufficient_data_and_request_human_review",
+      "evidence_to_display": ["platform_id", "compartment_id", "system_id", "task_id", "information_object_id", "rule_id"],
+      "rationale": "Hackathon co-pilot outputs must be grounded in visible record identifiers and should not invent certainty.",
+      "test_case_hint": "Ask the prototype to approve a configuration without a task ID or test/checklist result and verify that it requests review."
+    }
+  ]
+}

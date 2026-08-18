@@ -1,0 +1,692 @@
+{
+  "dataset": {
+    "name": "Notional Baltic Maritime Resilience Challenge — Scenario Pack",
+    "version": "0.1.0",
+    "classification": "Synthetic, non-classified, non-export-controlled",
+    "fictionalisation_notice": "All scenario names, event injects, asset conditions, expected impacts, actions and index values are fictional and abstract. They are designed solely for hackathon prototyping and must not be used to infer real locations, readiness, operational dependencies, logistics arrangements or decision procedures.",
+    "generated_for": "Industrial AI Hackathon — Resilience Challenge",
+    "source_files": [
+      "assets.json",
+      "dependencies.json",
+      "health-events.json",
+      "spares.json",
+      "capabilities.json",
+      "locations.geojson"
+    ]
+  },
+  "scenario_usage_guidance": {
+    "objective": "Teams should visualise each scenario, trace affected dependency paths, explain changes in abstract capability indices and propose transparent, human-reviewable mitigation actions.",
+    "scoring_note": "Expected impacts are evaluation anchors, not mandatory algorithm outputs. Teams may use their own transparent model if they cite the relevant assets, dependencies, health events and spare records.",
+    "safety_note": "All actions are abstract decision-support options. No prototype should simulate or recommend real-world operational control actions."
+  },
+  "scenarios": [
+    {
+      "scenario_id": "SCN-001",
+      "title": "Northhaven Support Base Unavailable for Seven Days",
+      "short_name": "Base Closure",
+      "category": "basing_and_support_disruption",
+      "difficulty": "medium",
+      "duration_hours": 168,
+      "narrative": "A fictional safety and infrastructure incident makes Northhaven Naval Support Base unavailable for seven days. The event disrupts primary berthing, support coordination, maintenance flow and access to the strategic spares depot. Teams must identify which abstract capabilities are most affected, distinguish direct from cascading effects, and propose a resilient support posture.",
+      "initial_conditions": {
+        "assume_existing_health_events": ["HE-001", "HE-002", "HE-003", "HE-004", "HE-005", "HE-007", "HE-008", "HE-009", "HE-010"],
+        "available_alternates": ["AST-BASE-002", "AST-DEP-002", "AST-PLT-004", "AST-COMMS-002"],
+        "key_constraint": "Eastgate Maritime Base can provide partial alternate support but has reduced synthetic capacity."
+      },
+      "injects": [
+        {
+          "inject_id": "SCN-001-INJ-01",
+          "target_asset_id": "AST-BASE-001",
+          "attribute": "status",
+          "previous_value": "available",
+          "injected_value": "unavailable",
+          "start_offset_hours": 0,
+          "end_offset_hours": 168,
+          "effect_description": "Primary support base cannot provide synthetic berthing, coordination, maintenance-flow or distribution-endpoint functions."
+        },
+        {
+          "inject_id": "SCN-001-INJ-02",
+          "target_asset_id": "AST-COMMS-001",
+          "attribute": "support_confidence_modifier",
+          "previous_value": 1.0,
+          "injected_value": 0.4,
+          "start_offset_hours": 0,
+          "end_offset_hours": 168,
+          "effect_description": "Primary relay remains technically present but loses most site-support confidence because its supporting base is unavailable."
+        },
+        {
+          "inject_id": "SCN-001-INJ-03",
+          "target_asset_id": "AST-DEP-001",
+          "attribute": "distribution_availability_modifier",
+          "previous_value": 1.0,
+          "injected_value": 0.45,
+          "start_offset_hours": 12,
+          "end_offset_hours": 168,
+          "effect_description": "Strategic depot stock remains visible, but release and onward movement through the primary support pathway are constrained."
+        },
+        {
+          "inject_id": "SCN-001-INJ-04",
+          "target_asset_id": "AST-MNT-001",
+          "attribute": "maintenance_throughput_modifier",
+          "previous_value": 0.76,
+          "injected_value": 0.4,
+          "start_offset_hours": 12,
+          "end_offset_hours": 168,
+          "effect_description": "Existing maintenance capacity constraint is amplified by loss of primary base support."
+        }
+      ],
+      "primary_affected_assets": [
+        "AST-BASE-001",
+        "AST-COMMS-001",
+        "AST-DEP-001",
+        "AST-MNT-001",
+        "AST-PLT-001",
+        "AST-PLT-004",
+        "AST-SNS-001",
+        "AST-SNS-004",
+        "AST-LOG-001"
+      ],
+      "primary_affected_dependencies": [
+        "DEP-001",
+        "DEP-002",
+        "DEP-003",
+        "DEP-010",
+        "DEP-012",
+        "DEP-014",
+        "DEP-020",
+        "DEP-021",
+        "DEP-022",
+        "DEP-023",
+        "DEP-026",
+        "DEP-028",
+        "DEP-031",
+        "DEP-035"
+      ],
+      "expected_impacts": {
+        "capability_trend": [
+          {
+            "capability_id": "CAP-003",
+            "expected_direction": "decrease",
+            "expected_severity": "high",
+            "anchor_index_range": [0.38, 0.58],
+            "rationale": "Maritime response readiness is affected by loss of primary basing, maintenance flow, spares distribution and existing platform constraints."
+          },
+          {
+            "capability_id": "CAP-004",
+            "expected_direction": "decrease",
+            "expected_severity": "high",
+            "anchor_index_range": [0.35, 0.55],
+            "rationale": "Support and sustainment are constrained by the disrupted depot-to-base-to-maintenance flow."
+          },
+          {
+            "capability_id": "CAP-005",
+            "expected_direction": "decrease",
+            "expected_severity": "medium",
+            "anchor_index_range": [0.5, 0.7],
+            "rationale": "Primary relay confidence is reduced and Eastgate becomes more important as an alternate coordination location."
+          },
+          {
+            "capability_id": "CAP-001",
+            "expected_direction": "decrease",
+            "expected_severity": "medium",
+            "anchor_index_range": [0.52, 0.7],
+            "rationale": "Several sensor and relay support paths are affected, while overlap and alternate relay paths provide partial resilience."
+          }
+        ],
+        "must_identify": [
+          "Northhaven is a high-centrality synthetic support node with direct and cascading effects.",
+          "Eastgate is an alternate, not a full replacement, because it has reduced capacity and depot throughput constraints.",
+          "The closure affects support flow even when platforms, sensors or spares are not directly failed.",
+          "The ongoing Fjordworks maintenance-capacity constraint increases the impact on platform restoration."
+        ],
+        "key_questions": [
+          "Which assets lose their only or primary support path?",
+          "Which capability index falls furthest, and which dependency paths explain the drop?",
+          "Which support activities should be preserved or deferred during the seven-day closure?",
+          "What must be pre-positioned or rerouted before the closure begins?"
+        ]
+      },
+      "possible_actions": [
+        {
+          "action_id": "SCN-001-ACT-01",
+          "title": "Activate Eastgate as the alternate support hub",
+          "action_type": "reroute_support",
+          "target_asset_ids": ["AST-BASE-002", "AST-PLT-001", "AST-PLT-004"],
+          "expected_benefit": "Restores partial basing and coordination support for selected high-priority assets.",
+          "trade_off": "Eastgate capacity is limited; lower-priority activity must be deferred or moved.",
+          "implementation_complexity": "medium"
+        },
+        {
+          "action_id": "SCN-001-ACT-02",
+          "title": "Pre-position critical spares and repair kits before closure",
+          "action_type": "pre_position_inventory",
+          "target_asset_ids": ["AST-DEP-001", "AST-DEP-002", "AST-BASE-002", "AST-MNT-001"],
+          "related_spare_ids": ["SPR-002", "SPR-004", "SPR-006", "SPR-008"],
+          "expected_benefit": "Reduces dependency on constrained primary distribution routes during the closure.",
+          "trade_off": "Consumes limited transport and storage capacity before disruption begins.",
+          "implementation_complexity": "medium"
+        },
+        {
+          "action_id": "SCN-001-ACT-03",
+          "title": "Prioritise high-criticality maintenance and defer non-critical work",
+          "action_type": "prioritise_maintenance",
+          "target_asset_ids": ["AST-MNT-001", "AST-PLT-003", "AST-SNS-002"],
+          "expected_benefit": "Protects restoration of the most consequential readiness and sensor contributions.",
+          "trade_off": "Creates a larger deferred-maintenance backlog after the closure.",
+          "implementation_complexity": "low"
+        },
+        {
+          "action_id": "SCN-001-ACT-04",
+          "title": "Re-route coordination through Eastgate relay and degraded gateway fallback",
+          "action_type": "reroute_communications",
+          "target_asset_ids": ["AST-COMMS-002", "AST-COMMS-003", "AST-SNS-001", "AST-SNS-004"],
+          "expected_benefit": "Maintains partial coordination continuity and visibility for affected sensor nodes.",
+          "trade_off": "Lower redundancy and confidence; operators must see degraded-mode status.",
+          "implementation_complexity": "medium"
+        }
+      ],
+      "evaluation_anchors": {
+        "minimum_evidence_records": ["AST-BASE-001", "AST-BASE-002", "DEP-021", "DEP-023", "HE-004", "HE-009"],
+        "acceptable_outcome_types": [
+          "dependency_graph_with_cascades",
+          "ranked_risk_list",
+          "capability_impact_dashboard",
+          "transparent_action_prioritisation"
+        ]
+      }
+    },
+    {
+      "scenario_id": "SCN-002",
+      "title": "Coastal Sensor Chain Degradation",
+      "short_name": "Sensor Chain Degradation",
+      "category": "surveillance_and_connectivity_disruption",
+      "difficulty": "medium",
+      "duration_hours": 96,
+      "narrative": "A degraded eastern coastal sensor develops a further synthetic fault while the offshore mesh gateway remains in degraded mode. The challenge is to distinguish direct sensor loss from communications and maintenance dependencies, protect abstract situational awareness, and decide whether planned maintenance of the underwater sensor should proceed.",
+      "initial_conditions": {
+        "assume_existing_health_events": ["HE-002", "HE-003", "HE-006", "HE-007"],
+        "available_alternates": ["AST-SNS-001", "AST-SNS-004", "AST-COMMS-001", "AST-COMMS-002", "AST-MNT-002"],
+        "key_constraint": "Southbank Underwater Sensor has a scheduled maintenance window, and the specialist maintenance site has finite capacity."
+      },
+      "injects": [
+        {
+          "inject_id": "SCN-002-INJ-01",
+          "target_asset_id": "AST-SNS-002",
+          "attribute": "status",
+          "previous_value": "degraded",
+          "injected_value": "unavailable",
+          "start_offset_hours": 0,
+          "end_offset_hours": 96,
+          "effect_description": "Eastreach sensor ceases to contribute to the synthetic coastal awareness index pending diagnosis and repair."
+        },
+        {
+          "inject_id": "SCN-002-INJ-02",
+          "target_asset_id": "AST-COMMS-003",
+          "attribute": "status",
+          "previous_value": "degraded",
+          "injected_value": "limited_availability",
+          "start_offset_hours": 0,
+          "end_offset_hours": 96,
+          "effect_description": "Offshore gateway can carry only reduced synthetic traffic and is not a full fallback for all affected routes."
+        },
+        {
+          "inject_id": "SCN-002-INJ-03",
+          "target_asset_id": "AST-MNT-002",
+          "attribute": "maintenance_capacity_modifier",
+          "previous_value": 0.74,
+          "injected_value": 0.55,
+          "start_offset_hours": 12,
+          "end_offset_hours": 96,
+          "effect_description": "Specialist facility capacity is divided between Eastreach repair and planned Southbank underwater-sensor maintenance."
+        },
+        {
+          "inject_id": "SCN-002-INJ-04",
+          "target_asset_id": "AST-SNS-003",
+          "attribute": "planned_maintenance_decision_required",
+          "previous_value": false,
+          "injected_value": true,
+          "start_offset_hours": 0,
+          "end_offset_hours": 24,
+          "effect_description": "Teams must decide whether to defer or proceed with the planned maintenance window."
+        }
+      ],
+      "primary_affected_assets": [
+        "AST-SNS-002",
+        "AST-SNS-003",
+        "AST-SNS-001",
+        "AST-SNS-004",
+        "AST-COMMS-001",
+        "AST-COMMS-002",
+        "AST-COMMS-003",
+        "AST-MNT-002"
+      ],
+      "primary_affected_dependencies": [
+        "DEP-012",
+        "DEP-013",
+        "DEP-015",
+        "DEP-016",
+        "DEP-017",
+        "DEP-018",
+        "DEP-019",
+        "DEP-033"
+      ],
+      "expected_impacts": {
+        "capability_trend": [
+          {
+            "capability_id": "CAP-001",
+            "expected_direction": "decrease",
+            "expected_severity": "high",
+            "anchor_index_range": [0.4, 0.6],
+            "rationale": "Loss of Eastreach removes a substantial sensor contribution while gateway degradation weakens fallback paths."
+          },
+          {
+            "capability_id": "CAP-005",
+            "expected_direction": "decrease",
+            "expected_severity": "medium",
+            "anchor_index_range": [0.5, 0.68],
+            "rationale": "Coordination continuity is strained by the lower availability of the offshore gateway and increased reliance on the two primary relays."
+          },
+          {
+            "capability_id": "CAP-002",
+            "expected_direction": "conditional",
+            "expected_severity": "medium_to_high",
+            "anchor_index_range": [0.38, 0.7],
+            "rationale": "Impact depends on whether teams defer planned maintenance on Southbank and how they account for specialist maintenance capacity."
+          }
+        ],
+        "must_identify": [
+          "Eastreach is already degraded in the baseline health-event set, making a second fault more consequential.",
+          "A decision on Southbank planned maintenance changes the risk posture across more than one capability.",
+          "Communications redundancy is not binary: a degraded gateway and operational relays provide different levels of resilience.",
+          "The sensor maintenance site is a constrained restoration resource."
+        ],
+        "key_questions": [
+          "How much abstract coastal awareness can remaining sensors and relays sustain?",
+          "Should planned underwater-sensor maintenance proceed, be deferred, or be re-sequenced?",
+          "Which maintenance task restores the largest capability contribution per unit of constrained capacity?",
+          "How should the operator represent low-confidence but still available data paths?"
+        ]
+      },
+      "possible_actions": [
+        {
+          "action_id": "SCN-002-ACT-01",
+          "title": "Prioritise Eastreach diagnosis and calibration",
+          "action_type": "prioritise_maintenance",
+          "target_asset_ids": ["AST-SNS-002", "AST-MNT-002"],
+          "related_spare_ids": ["SPR-001", "SPR-005", "SPR-010"],
+          "expected_benefit": "Restores a significant coastal-awareness contribution if the required power-conditioning item or substitute is available.",
+          "trade_off": "Consumes specialist capacity and may delay planned underwater-sensor work.",
+          "implementation_complexity": "medium"
+        },
+        {
+          "action_id": "SCN-002-ACT-02",
+          "title": "Defer planned Southbank maintenance for 96 hours",
+          "action_type": "defer_maintenance",
+          "target_asset_ids": ["AST-SNS-003", "AST-MNT-002"],
+          "expected_benefit": "Preserves subsurface-detection continuity while Eastreach restoration is prioritised.",
+          "trade_off": "Deferral increases future maintenance exposure and must be shown as a time-bounded decision.",
+          "implementation_complexity": "low"
+        },
+        {
+          "action_id": "SCN-002-ACT-03",
+          "title": "Rebalance reporting through primary relay nodes",
+          "action_type": "reroute_communications",
+          "target_asset_ids": ["AST-COMMS-001", "AST-COMMS-002", "AST-SNS-001", "AST-SNS-004"],
+          "expected_benefit": "Preserves higher-confidence reporting from remaining coastal sensors.",
+          "trade_off": "Raises reliance on critical relays with finite site-service resilience.",
+          "implementation_complexity": "medium"
+        },
+        {
+          "action_id": "SCN-002-ACT-04",
+          "title": "Use limited-capability sensor power substitute if approved",
+          "action_type": "apply_substitute",
+          "target_asset_ids": ["AST-SNS-002"],
+          "related_spare_ids": ["SPR-010"],
+          "expected_benefit": "May restore partial sensor contribution faster than waiting for the preferred item.",
+          "trade_off": "The synthetic substitute reduces readiness contribution and requires a follow-up calibration task.",
+          "implementation_complexity": "medium"
+        }
+      ],
+      "evaluation_anchors": {
+        "minimum_evidence_records": ["HE-002", "HE-003", "HE-006", "AST-SNS-002", "AST-SNS-003", "DEP-016", "DEP-017", "SPR-001", "SPR-010"],
+        "acceptable_outcome_types": [
+          "coverage_or_capability_comparison",
+          "maintenance_priority_explanation",
+          "communications_confidence_visualisation",
+          "time-bounded_decision_workflow"
+        ]
+      }
+    },
+    {
+      "scenario_id": "SCN-003",
+      "title": "Critical Spare Shortage During Platform Recovery",
+      "short_name": "Critical Spare Shortage",
+      "category": "logistics_and_maintenance_disruption",
+      "difficulty": "high",
+      "duration_hours": 240,
+      "narrative": "A notional platform recovery effort encounters a shortage of a critical auxiliary cooling-pump kit. The preferred inventory is fully reserved, the contingency substitute is limited in duration, and a second high-criticality demand emerges. Teams must make transparent allocation, substitution, and maintenance-prioritisation decisions while considering impact on maritime response readiness and support sustainment.",
+      "initial_conditions": {
+        "assume_existing_health_events": ["HE-001", "HE-004", "HE-005", "HE-008", "HE-010"],
+        "available_alternates": ["AST-DEP-002", "AST-PLT-004", "AST-BASE-002", "SPR-011", "SPR-009"],
+        "key_constraint": "The preferred cooling-pump kit SPR-004 has two units, both reserved; the interim substitute SPR-011 has one available unit and reduced duration/assurance."
+      },
+      "injects": [
+        {
+          "inject_id": "SCN-003-INJ-01",
+          "target_spare_id": "SPR-004",
+          "attribute": "quantity_reserved",
+          "previous_value": 2,
+          "injected_value": 2,
+          "start_offset_hours": 0,
+          "end_offset_hours": 240,
+          "effect_description": "Preferred cooling-pump inventory remains fully reserved against competing demand; no unallocated preferred unit is available."
+        },
+        {
+          "inject_id": "SCN-003-INJ-02",
+          "target_spare_id": "SPR-011",
+          "attribute": "quantity_on_hand",
+          "previous_value": 1,
+          "injected_value": 1,
+          "start_offset_hours": 0,
+          "end_offset_hours": 240,
+          "effect_description": "Only one interim substitute is available; it supports limited-duration synthetic operation and requires review."
+        },
+        {
+          "inject_id": "SCN-003-INJ-03",
+          "target_asset_id": "AST-PLT-001",
+          "attribute": "repair_demand",
+          "previous_value": "pending_supply_confirmation",
+          "injected_value": "cooling_pump_kit_required",
+          "start_offset_hours": 0,
+          "end_offset_hours": 240,
+          "effect_description": "Subsurface platform recovery now requires a cooling-pump kit before readiness can be restored."
+        },
+        {
+          "inject_id": "SCN-003-INJ-04",
+          "target_asset_id": "AST-PLT-003",
+          "attribute": "repair_demand",
+          "previous_value": "corrective_maintenance_open",
+          "injected_value": "cooling_pump_kit_required",
+          "start_offset_hours": 24,
+          "end_offset_hours": 240,
+          "effect_description": "A competing platform recovery demand creates an allocation conflict for preferred or interim inventory."
+        },
+        {
+          "inject_id": "SCN-003-INJ-05",
+          "target_asset_id": "AST-LOG-001",
+          "attribute": "delivery_time_modifier",
+          "previous_value": 1.0,
+          "injected_value": 1.4,
+          "start_offset_hours": 0,
+          "end_offset_hours": 72,
+          "effect_description": "Existing coastal distribution delay increases the time required to move any allocated spare to the maintenance site."
+        }
+      ],
+      "primary_affected_assets": [
+        "AST-PLT-001",
+        "AST-PLT-003",
+        "AST-MNT-001",
+        "AST-DEP-001",
+        "AST-DEP-002",
+        "AST-LOG-001",
+        "AST-PLT-004"
+      ],
+      "primary_affected_dependencies": [
+        "DEP-002",
+        "DEP-003",
+        "DEP-008",
+        "DEP-009",
+        "DEP-026",
+        "DEP-028",
+        "DEP-029",
+        "DEP-035"
+      ],
+      "expected_impacts": {
+        "capability_trend": [
+          {
+            "capability_id": "CAP-003",
+            "expected_direction": "decrease",
+            "expected_severity": "high",
+            "anchor_index_range": [0.35, 0.55],
+            "rationale": "Two platform contributions are constrained by the same synthetic critical spare and maintenance capacity."
+          },
+          {
+            "capability_id": "CAP-004",
+            "expected_direction": "decrease",
+            "expected_severity": "medium_to_high",
+            "anchor_index_range": [0.4, 0.62],
+            "rationale": "Reserved inventory, contingency throughput limits and last-mile delay expose sustainment fragility."
+          },
+          {
+            "capability_id": "CAP-002",
+            "expected_direction": "conditional",
+            "expected_severity": "low_to_medium",
+            "anchor_index_range": [0.52, 0.72],
+            "rationale": "Impact depends on whether the allocation decision favours the subsurface platform contribution."
+          }
+        ],
+        "must_identify": [
+          "The issue is an allocation and timing problem, not simply an out-of-stock problem.",
+          "The preferred spare is fully reserved; the interim substitute has explicit capability/duration constraints.",
+          "Maintenance-facility capacity and last-mile transport time can negate the value of a spare that is nominally available.",
+          "The prototype should show why one allocation is selected and what capability trade-off results."
+        ],
+        "key_questions": [
+          "Which platform should receive the available interim substitute, and why?",
+          "What is the capability cost of protecting one platform recovery over another?",
+          "Can the logistics-support platform reduce delivery delay sufficiently to alter the decision?",
+          "Which action reduces near-term risk while avoiding an unacknowledged long-term maintenance liability?"
+        ]
+      },
+      "possible_actions": [
+        {
+          "action_id": "SCN-003-ACT-01",
+          "title": "Allocate interim cooling-pump kit to the highest capability-impact recovery",
+          "action_type": "allocate_critical_spare",
+          "target_asset_ids": ["AST-PLT-001", "AST-PLT-003"],
+          "related_spare_ids": ["SPR-011"],
+          "expected_benefit": "Restores one platform contribution sooner using the only available interim substitute.",
+          "trade_off": "The other platform remains unavailable, and the restored platform has limited-duration synthetic operation constraints.",
+          "implementation_complexity": "low"
+        },
+        {
+          "action_id": "SCN-003-ACT-02",
+          "title": "Release and re-prioritise reserved preferred inventory",
+          "action_type": "reallocate_reserved_inventory",
+          "target_asset_ids": ["AST-DEP-001", "AST-MNT-001", "AST-PLT-001", "AST-PLT-003"],
+          "related_spare_ids": ["SPR-004"],
+          "expected_benefit": "May provide a preferred restoration path if the existing reservation can be safely deferred.",
+          "trade_off": "Creates explicit risk for the activity or asset originally holding the reservation.",
+          "implementation_complexity": "medium"
+        },
+        {
+          "action_id": "SCN-003-ACT-03",
+          "title": "Use logistics-support platform for priority spare movement",
+          "action_type": "reroute_logistics",
+          "target_asset_ids": ["AST-PLT-004", "AST-LOG-001", "AST-MNT-001"],
+          "expected_benefit": "Reduces dependency on the delayed coastal distribution path for one high-priority movement.",
+          "trade_off": "Consumes support-platform availability and cannot replace broader distribution throughput.",
+          "implementation_complexity": "medium"
+        },
+        {
+          "action_id": "SCN-003-ACT-04",
+          "title": "Defer lower-capability-impact corrective work",
+          "action_type": "defer_maintenance",
+          "target_asset_ids": ["AST-PLT-003", "AST-MNT-001"],
+          "expected_benefit": "Frees constrained maintenance and supply capacity for the platform with higher selected capability contribution.",
+          "trade_off": "Extends existing unavailability and increases backlog risk for the deferred platform.",
+          "implementation_complexity": "low"
+        }
+      ],
+      "evaluation_anchors": {
+        "minimum_evidence_records": ["SPR-004", "SPR-011", "HE-001", "HE-004", "HE-010", "AST-PLT-001", "AST-PLT-003", "DEP-028", "DEP-029"],
+        "acceptable_outcome_types": [
+          "spare_allocation_comparison",
+          "capability_trade_off_explanation",
+          "time_to_restore_estimate",
+          "transparent_reservation_and_substitution_workflow"
+        ]
+      }
+    },
+    {
+      "scenario_id": "SCN-004",
+      "title": "Regional Communications Relay Disruption",
+      "short_name": "Relay Disruption",
+      "category": "communications_and_site_services_disruption",
+      "difficulty": "medium",
+      "duration_hours": 72,
+      "narrative": "A fictional site-services fault makes the Eastgate communications relay unavailable for 72 hours while the offshore mesh gateway is already degraded. Teams must maintain transparent coordination continuity, identify which sensors and platforms are affected, and decide whether to use limited backup-power resources, reroute through the primary relay, or operate in a clearly labelled degraded mode.",
+      "initial_conditions": {
+        "assume_existing_health_events": ["HE-003", "HE-007", "HE-009"],
+        "available_alternates": ["AST-COMMS-001", "AST-COMMS-003", "AST-BASE-001", "AST-BASE-002", "SPR-002", "SPR-006", "SPR-012"],
+        "key_constraint": "Northhaven relay has an overdue backup site-service test; the offshore gateway is degraded and offers limited fallback only."
+      },
+      "injects": [
+        {
+          "inject_id": "SCN-004-INJ-01",
+          "target_asset_id": "AST-COMMS-002",
+          "attribute": "status",
+          "previous_value": "available",
+          "injected_value": "unavailable",
+          "start_offset_hours": 0,
+          "end_offset_hours": 72,
+          "effect_description": "Eastgate relay cannot provide synthetic regional data-relay or coordination functions."
+        },
+        {
+          "inject_id": "SCN-004-INJ-02",
+          "target_asset_id": "AST-BASE-002",
+          "attribute": "site_service_confidence_modifier",
+          "previous_value": 1.0,
+          "injected_value": 0.5,
+          "start_offset_hours": 0,
+          "end_offset_hours": 72,
+          "effect_description": "Forward-base coordination confidence is reduced during the relay restoration period."
+        },
+        {
+          "inject_id": "SCN-004-INJ-03",
+          "target_asset_id": "AST-COMMS-003",
+          "attribute": "fallback_capacity_modifier",
+          "previous_value": 0.55,
+          "injected_value": 0.35,
+          "start_offset_hours": 0,
+          "end_offset_hours": 72,
+          "effect_description": "Degraded offshore gateway can support only a limited subset of fallback traffic."
+        },
+        {
+          "inject_id": "SCN-004-INJ-04",
+          "target_spare_id": "SPR-006",
+          "attribute": "quantity_on_hand",
+          "previous_value": 1,
+          "injected_value": 1,
+          "start_offset_hours": 0,
+          "end_offset_hours": 72,
+          "effect_description": "One preferred backup-power module exists but may be needed to protect another critical relay contingency."
+        }
+      ],
+      "primary_affected_assets": [
+        "AST-COMMS-002",
+        "AST-COMMS-001",
+        "AST-COMMS-003",
+        "AST-BASE-002",
+        "AST-SNS-002",
+        "AST-PLT-002",
+        "AST-SNS-001",
+        "AST-SNS-004"
+      ],
+      "primary_affected_dependencies": [
+        "DEP-007",
+        "DEP-015",
+        "DEP-022",
+        "DEP-025",
+        "DEP-032",
+        "DEP-033"
+      ],
+      "expected_impacts": {
+        "capability_trend": [
+          {
+            "capability_id": "CAP-005",
+            "expected_direction": "decrease",
+            "expected_severity": "high",
+            "anchor_index_range": [0.38, 0.58],
+            "rationale": "Loss of one major relay alongside an already degraded gateway reduces coordination redundancy and confidence."
+          },
+          {
+            "capability_id": "CAP-001",
+            "expected_direction": "decrease",
+            "expected_severity": "medium",
+            "anchor_index_range": [0.48, 0.68],
+            "rationale": "Eastreach reporting path is directly affected; remaining sensors can retain partial awareness through alternate routes."
+          },
+          {
+            "capability_id": "CAP-003",
+            "expected_direction": "decrease",
+            "expected_severity": "medium",
+            "anchor_index_range": [0.5, 0.7],
+            "rationale": "Surface-platform coordination and forward-base support are reduced, but platform availability remains otherwise unchanged."
+          }
+        ],
+        "must_identify": [
+          "The Eastgate relay outage is a communications and coordination issue with capability consequences beyond the relay itself.",
+          "Northhaven relay becomes a more critical single point of synthetic failure during the event.",
+          "The degraded offshore gateway is not equivalent to a full redundant route.",
+          "Backup power allocation should show duration and capability limitations explicitly."
+        ],
+        "key_questions": [
+          "Which assets lose their primary relay path and what alternate path remains?",
+          "What confidence level should operators see for data and coordination during degraded mode?",
+          "Should the preferred backup power module or portable power pack be allocated, and to which node?",
+          "Which additional failure would create the largest incremental capability drop?"
+        ]
+      },
+      "possible_actions": [
+        {
+          "action_id": "SCN-004-ACT-01",
+          "title": "Restore Eastgate relay using preferred backup-power module",
+          "action_type": "allocate_critical_spare",
+          "target_asset_ids": ["AST-COMMS-002", "AST-BASE-002"],
+          "related_spare_ids": ["SPR-006"],
+          "expected_benefit": "May restore higher-confidence regional relay capacity within the synthetic scenario.",
+          "trade_off": "Consumes the only preferred backup-power module and reduces contingency margin elsewhere.",
+          "implementation_complexity": "medium"
+        },
+        {
+          "action_id": "SCN-004-ACT-02",
+          "title": "Use portable power pack for time-bounded degraded restoration",
+          "action_type": "apply_substitute",
+          "target_asset_ids": ["AST-COMMS-002"],
+          "related_spare_ids": ["SPR-012"],
+          "expected_benefit": "Provides a short-duration synthetic continuity option while preferred restoration is arranged.",
+          "trade_off": "Reduced load and a 48-hour duration limit require clear operator visibility and follow-up action.",
+          "implementation_complexity": "low"
+        },
+        {
+          "action_id": "SCN-004-ACT-03",
+          "title": "Reroute priority traffic through Northhaven relay",
+          "action_type": "reroute_communications",
+          "target_asset_ids": ["AST-COMMS-001", "AST-SNS-002", "AST-PLT-002"],
+          "expected_benefit": "Maintains a higher-confidence route for selected critical sensor and platform contributions.",
+          "trade_off": "Creates increased concentration risk at Northhaven, whose backup site-service test is overdue.",
+          "implementation_complexity": "medium"
+        },
+        {
+          "action_id": "SCN-004-ACT-04",
+          "title": "Operate non-priority links in explicitly labelled degraded mode",
+          "action_type": "degraded_mode_operation",
+          "target_asset_ids": ["AST-COMMS-003", "AST-SNS-001", "AST-SNS-004"],
+          "expected_benefit": "Preserves partial awareness while avoiding false confidence in constrained fallback paths.",
+          "trade_off": "Lower information confidence and possible delay for non-priority data flows.",
+          "implementation_complexity": "low"
+        }
+      ],
+      "evaluation_anchors": {
+        "minimum_evidence_records": ["AST-COMMS-002", "AST-COMMS-001", "AST-COMMS-003", "HE-003", "HE-007", "DEP-015", "DEP-032", "SPR-006", "SPR-012"],
+        "acceptable_outcome_types": [
+          "relay_path_visualisation",
+          "confidence_aware_operator_dashboard",
+          "backup_power_allocation_comparison",
+          "single_point_of_failure_analysis"
+        ]
+      }
+    }
+  ]
+}

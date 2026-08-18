@@ -1,0 +1,233 @@
+{
+  "pack_name": "saab-industrial-ai-hackathon-synthetic-data-pack",
+  "display_name": "Saab Industrial AI Hackathon — Synthetic Challenge Data Pack",
+  "version": "0.1.0",
+  "release_status": "draft",
+  "generated_date": "2026-08-16",
+  "classification": "Synthetic, non-classified, non-export-controlled",
+  "entry_point": "README.md",
+  "license_or_usage_notice": "Hackathon use only. All data is fictional and notional. Do not combine with unapproved real-world, customer-specific, classified, export-controlled or operationally sensitive information.",
+  "fictionalisation_notice": "Every platform, component, location, dependency, document, technical value, scenario, capability index and outcome in this pack is fictional and simplified for prototype development. Nothing in this pack represents Saab operational data, customer data, real system configuration, technical publications, performance or decision procedures.",
+  "standards_notice": "This is a non-normative hackathon profile. It may be conceptually informed by lifecycle-support and logistics-product-data practices but is not an S3000L, SAE GEIA-STD-0007 or other standards implementation, exchange package or conformance demonstration.",
+  "challenge_packs": [
+    {
+      "challenge_id": "CH-RESILIENCE",
+      "display_name": "Fleet & Coastal-Infrastructure Resilience Engine",
+      "description": "A fictional system-of-systems resilience challenge using assets, typed dependencies, health events, spares, capability contributions and disruption scenarios.",
+      "data_directory": "data/resilience",
+      "entry_scenario_id": "SCN-004",
+      "entry_scenario_title": "Regional Communications Relay Disruption",
+      "files": [
+        {
+          "path": "data/resilience/assets.json",
+          "record_key": "assets",
+          "record_count": 18,
+          "description": "Fictional platforms, sensors, bases, depots, maintenance facilities, communications nodes and logistics nodes."
+        },
+        {
+          "path": "data/resilience/dependencies.json",
+          "record_key": "dependencies",
+          "record_count": 36,
+          "description": "Typed basing, maintenance, supply, logistics, communications, coordination and site-service dependencies."
+        },
+        {
+          "path": "data/resilience/health-events.json",
+          "record_key": "events",
+          "record_count": 10,
+          "description": "Synthetic maintenance status, degradation, readiness, capacity, logistics and site-service events."
+        },
+        {
+          "path": "data/resilience/spares.json",
+          "record_key": "spares",
+          "record_count": 12,
+          "description": "Synthetic spare-part, support-equipment, stock, lead-time, substitute and criticality records."
+        },
+        {
+          "path": "data/resilience/capabilities.json",
+          "record_key": "capabilities",
+          "record_count": 5,
+          "description": "Abstract capability indices, contribution relationships, thresholds, risk drivers and resilience actions."
+        },
+        {
+          "path": "data/resilience/locations.geojson",
+          "record_key": "features",
+          "record_count": 18,
+          "description": "Diagrammatic fictional Baltic-region positions matched to asset IDs."
+        },
+        {
+          "path": "data/resilience/scenarios.json",
+          "record_key": "scenarios",
+          "record_count": 4,
+          "description": "Disruption scenarios with injects, expected impacts, possible actions, trade-offs and evaluation anchors."
+        }
+      ],
+      "primary_identifiers": {
+        "asset": "asset_id",
+        "dependency": "dependency_id",
+        "health_event": "event_id",
+        "spare": "spare_id",
+        "capability": "capability_id",
+        "scenario": "scenario_id"
+      },
+      "core_relationships": [
+        "dependencies.source_asset_id -> assets.asset_id",
+        "dependencies.target_asset_id -> assets.asset_id",
+        "health_events.asset_id -> assets.asset_id",
+        "spares.stocking_asset_id -> assets.asset_id",
+        "spares.primary_supported_asset_ids[] -> assets.asset_id",
+        "capabilities.contributions[].asset_id -> assets.asset_id",
+        "scenarios.primary_affected_assets[] -> assets.asset_id",
+        "scenarios.primary_affected_dependencies[] -> dependencies.dependency_id"
+      ]
+    },
+    {
+      "challenge_id": "CH-COPILOT",
+      "display_name": "Operational Co-pilot for Naval Production & Support",
+      "description": "A fictional lifecycle-support and configuration-control challenge using platforms, compartments, systems, tasks, information objects, rules, historical issues, report templates and task-level scenarios.",
+      "data_directory": "data/copilot",
+      "entry_scenario_id": "COP-SCN-001",
+      "entry_scenario_title": "APR-220 Revision-D Procedure Mismatch",
+      "files": [
+        {
+          "path": "data/copilot/systems.json",
+          "record_keys": ["platforms", "compartments", "systems"],
+          "record_counts": {
+            "platforms": 3,
+            "compartments": 8,
+            "systems": 10
+          },
+          "description": "Fictional platforms, compartments, installed systems, configuration revisions and lifecycle states."
+        },
+        {
+          "path": "data/copilot/tasks.json",
+          "record_key": "tasks",
+          "record_count": 15,
+          "description": "Synthetic maintenance, inspection, installation, configuration-verification, update and test tasks."
+        },
+        {
+          "path": "data/copilot/information-objects.json",
+          "record_key": "information_objects",
+          "record_count": 27,
+          "description": "Synthetic procedures, tests, safety notes, drawing descriptions, checklists and configuration-control information objects."
+        },
+        {
+          "path": "data/copilot/configuration-rules.json",
+          "record_key": "rules",
+          "record_count": 8,
+          "description": "Explicit synthetic applicability, incompatibility, sequence, physical-constraint and evidence rules."
+        },
+        {
+          "path": "data/copilot/issue-history.json",
+          "record_key": "issues",
+          "record_count": 7,
+          "description": "Synthetic prior deviations, rework, missing checks, revision errors and traceability findings."
+        },
+        {
+          "path": "data/copilot/report-templates.json",
+          "record_key": "templates",
+          "record_count": 3,
+          "description": "Synthetic installation, inspection/rework and test/configuration-closure report structures."
+        },
+        {
+          "path": "data/copilot/scenarios.json",
+          "record_key": "scenarios",
+          "record_count": 4,
+          "description": "Task-level test scenarios with injects, required evidence, expected conceptual outcomes and success criteria."
+        }
+      ],
+      "primary_identifiers": {
+        "platform": "platform_id",
+        "compartment": "compartment_id",
+        "system": "system_id",
+        "task": "task_id",
+        "information_object": "information_object_id",
+        "configuration_rule": "rule_id",
+        "issue": "issue_id",
+        "report_template": "template_id",
+        "scenario": "scenario_id"
+      },
+      "core_relationships": [
+        "compartments.platform_id -> platforms.platform_id",
+        "systems.platform_id -> platforms.platform_id",
+        "systems.compartment_id -> compartments.compartment_id",
+        "tasks.platform_id -> platforms.platform_id",
+        "tasks.compartment_id -> compartments.compartment_id",
+        "tasks.system_id -> systems.system_id",
+        "tasks.required_document_ids[] -> information_objects.information_object_id",
+        "tasks.report_template_id -> report_templates.template_id",
+        "issues.system_id -> systems.system_id",
+        "issues.related_task_id -> tasks.task_id",
+        "issues.related_rule_id -> configuration_rules.rule_id",
+        "scenarios.entry_context.system_id -> systems.system_id",
+        "scenarios.entry_context.task_id -> tasks.task_id"
+      ]
+    }
+  ],
+  "pack_requirements": {
+    "mandatory_cloud_services": false,
+    "supported_usage_modes": [
+      "static_json_or_geojson",
+      "local_python_or_node_application",
+      "browser_frontend_mock_data",
+      "lovable_with_team_owned_supabase",
+      "shared_read_only_api_or_supabase_optional",
+      "graph_database_or_visualisation_tool_optional"
+    ],
+    "expected_time_to_understand_minutes": 20,
+    "expected_time_to_load_minutes": 5,
+    "target_total_pack_size_mb_max": 5,
+    "recommended_team_setup": "Use static files for the fastest start, or seed a team-owned Supabase project for Lovable-backed persistence and richer application workflows."
+  },
+  "required_docs": [
+    {
+      "path": "README.md",
+      "status": "present",
+      "purpose": "Root onboarding, challenge overview, boundaries and basic setup."
+    },
+    {
+      "path": "docs/resilience-quickstart.md",
+      "status": "to_create",
+      "purpose": "One-page start guide for the resilience challenge."
+    },
+    {
+      "path": "docs/copilot-quickstart.md",
+      "status": "to_create",
+      "purpose": "One-page start guide for the operational co-pilot challenge."
+    },
+    {
+      "path": "docs/data-dictionary.md",
+      "status": "to_create",
+      "purpose": "Field definitions, allowable values, IDs and relationship guidance."
+    },
+    {
+      "path": "docs/lovable-prompts.md",
+      "status": "to_create",
+      "purpose": "Ready-to-paste Lovable prompts for both challenge tracks."
+    },
+    {
+      "path": "docs/scenario-guide.md",
+      "status": "to_create",
+      "purpose": "Scenario walkthroughs, evidence expectations and evaluation guidance."
+    }
+  ],
+  "validation_requirements": [
+    "All JSON and GeoJSON files parse successfully.",
+    "Every foreign-key-style reference resolves to an existing record in its source file.",
+    "Every scenario inject, evidence reference and action target resolves to an existing record where applicable.",
+    "Every documented record count matches the actual data file count.",
+    "No real, classified, export-controlled, customer-specific or operationally sensitive information is included.",
+    "The full pack can be opened and used locally without mandatory cloud access.",
+    "The Lovable/Supabase seed path is tested with a new project before participant release."
+  ],
+  "release_checklist": {
+    "data_validation": "pending",
+    "security_and_fictionalisation_review": "pending",
+    "repository_packaging": "pending",
+    "supabase_schema_and_seed": "pending",
+    "lovable_prompt_pack": "pending",
+    "quickstarts": "pending",
+    "technical_dry_run": "pending",
+    "offline_zip_fallback": "pending",
+    "judging_materials": "pending"
+  }
+}
